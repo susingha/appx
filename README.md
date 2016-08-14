@@ -10,20 +10,21 @@ Time spent: **40** hours spent in total
 
 The following **required** functionality is completed:
 
-* [ ] User can **successfully add and remove items** from the todo list
-* [ ] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list.
-* [ ] User can **persist todo items** and retrieve them properly on app restart
+* [x] User can **successfully add and remove items** from the todo list
+* [x] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list.
+* [x] User can **persist todo items** and retrieve them properly on app restart
 
 The following **optional** features are implemented:
 
-* [ ] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
-* [ ] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
+* [x] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
+* [x] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
+* [x] Add support for ~~~completion due dates~~~ Description for todo items (and display within listview item)
 
 The following **additional** features are implemented:
 
-* [ ] Splash Screen: Added Splash Screen at initial app startup. Changed Manifest.xml to start the SplashScreen activity instead of MainActivity
-* [ ] Quick Delete: Long Pressing on the individual items brings up a quick delete button on all items. Long Pressing again will toggle the delete buttons
-* [ ] Edit and Delete: Deletion of a List item can be done from the Edit screen
+* [x] Splash Screen: Added Splash Screen at initial app startup.
+* [x] Quick Delete Toggle on Long Press: Long Press on items show / hide Quick Delete buttons on all items.
+* [x] Edit and Delete: Items can be deleted from the Edit screen.
 
 ## Video Walkthrough 
 
