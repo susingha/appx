@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:hint="Type Item Name"
         android:text=""
+        android:inputType="textCapWords"
         android:id="@+id/etNewItem"
         android:layout_below="@+id/lvItems"
         android:layout_toLeftOf="@+id/btnAddItem"

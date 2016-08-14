@@ -12,6 +12,6 @@ public class GlobalCommon {
     public static final int DATABASE_CODE = 23;
     public static final int TEXTFILE_CODE = 24;
 
-    public static final int SPLASH_DISPLAY_LENGTH = 3000;
+    public static final int SPLASH_DISPLAY_LENGTH = 1000;
 
 }
