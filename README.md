@@ -18,13 +18,14 @@ The following **optional** features are implemented:
 
 * [x] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
 * [x] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
-* [x] Add support for ~~completion due dates~~ Description for todo items (and display within listview item)
+* [x] Add support for ~~completion due dates~~ (Description) for todo items (and display within listview item)
+* [x] Tweak the style improving the UI / UX, ~~play with colors, images or backgrounds~~
 
 The following **additional** features are implemented:
 
-* [x] Splash Screen: Added Splash Screen at initial app startup.
-* [x] Quick Delete Toggle on Long Press: Long Press on items show / hide Quick Delete buttons on all items.
-* [x] Edit and Delete: Items can be deleted from the Edit screen.
+* [x] Splash Screen: Added Splash Screen at initial app startup
+* [x] Quick Delete Buttons: Long Press on items show / hide Quick Delete buttons (displayed within listview item)
+* [x] Edit and Delete: Items can be deleted from the Edit screen
 
 ## Video Walkthrough 
 
