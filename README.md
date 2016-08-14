@@ -21,6 +21,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
+* [ ] Splash Screen: Added Splash Screen at initial app startup. Changed Manifest.xml to start the SplashScreen activity instead of MainActivity
 * [ ] Quick Delete: Long Pressing on the individual items brings up a quick delete button on all items. Long Pressing again will toggle the delete buttons
 * [ ] Edit and Delete: Deletion of a List item can be done from the Edit screen
 
