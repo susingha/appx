@@ -60,7 +60,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movies> {
 
         // find the image view and clear out the image
         ImageView ivImage = mainViewHolder.ivImage_static;
-        ivImage.setImageResource(0);
+        // ivImage.setImageResource(0);
         TextView tvTitle = mainViewHolder.tvTitle_static;
         TextView tvOverview = mainViewHolder.tvOverview_static;
 
