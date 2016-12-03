@@ -78,7 +78,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movies> {
                 Picasso.with(getContext()).load(movie.getBackdropPath()).transform(new RoundedCornersTransformation(10, 10)).into(ivImage);
             }
         } else if (type == Movies.popularity_t.HIGH.ordinal()) {
-            Picasso.with(getContext()).load(movie.getBackdropPath()).transform(new RoundedCornersTransformation(10, 10)).into(ivImage);
+                Picasso.with(getContext()).load(movie.getBackdropPath()).transform(new RoundedCornersTransformation(10, 10)).into(ivImage);
         }
 
         // return the view

@@ -56,6 +56,8 @@ public class MovieActivity extends AppCompatActivity {
         swipeContainer.setRefreshing(false);
     }
 
+
+
     public void fetchTimelineAsync(int page) {
         Log.d("INFO", "fetchTimelineAsync called, page = " + page);
         movies = Movies.fetchMovieArrayList(true, this);
