@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Offa</string>
+    <string name="device_admin_not_enabled">Screen lock not activated</string>
+    <string name="sample_device_admin">Offa</string>
+    <string name="click_on_activate">Click on Activate button to secure your application.</string>
+    <string name="sample_device_admin_description">Sample device admin description</string>
+    <string name="admin_receiver_status">Admin receiver status %s</string>
+    <string name="admin_receiver_status_enabled">enabled</string>
+    <string name="admin_receiver_status_disabled">disabled</string>
+    <string name="admin_receiver_status_disable_warning">Admin receiver status disable_warning</string>
+    <string name="admin_receiver_status_pw_changed">Admin receiver status pw changed</string>
+    <string name="test_screen_lock">Activate Screen Lock</string>
+    <string name="lock_screen">Lock Screen</string>
+
+
+</resources>
