@@ -2,13 +2,13 @@ var xhr = null;
 
 export const xhrSend = (url, addHeaderRef, responseRef, fdata) => {
   var request;
-  console.log('sup: sending xhr req: ' + url);
+  console.log('sup: sending xhr: ' + url);
 
   xhr = null; // Toggle xhr object reuse to create new
 
   if (xhr == null) {
     xhr = new XMLHttpRequest();
-    console.log('sup:a got a new xhr');
+    // console.log('sup:a got a new xhr');
   }
   request = xhr;
   request.onreadystatechange = e => {
@@ -16,12 +16,12 @@ export const xhrSend = (url, addHeaderRef, responseRef, fdata) => {
       return;
     }
     if (request.status === 200) {
-      console.log('sup:200 printing response headers:');
-      console.log(request.getAllResponseHeaders());
+      // console.log('sup:200 printing response headers:');
+      // console.log(request.getAllResponseHeaders());
       responseRef(request.responseText);
     } else if (request.status === 302) {
-      console.log('sup:302 printing response headers:');
-      console.log(request.getAllResponseHeaders());
+      // console.log('sup:302 printing response headers:');
+      // console.log(request.getAllResponseHeaders());
     } else {
       console.warn('error');
     }

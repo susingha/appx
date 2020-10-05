@@ -1,40 +1,73 @@
 import React, {useState} from 'react';
-import {performLogin} from '../javascript/httpurl';
-
-import styles from './style';
 import {
   Keyboard,
   Text,
   View,
   TextInput,
   TouchableWithoutFeedback,
+  ImagePropTypes,
 } from 'react-native';
 import {Button} from 'react-native-elements';
 
-export default function LoginScreen() {
+import styles from './style';
+import {performLogin, performRequestStatus} from '../javascript/httpurl';
+
+
+export default function LoginScreen (props) {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
 
-  const consoleLog = log => {
-    console.log(log);
+  const onRequestStatus = () => {
+    console.log('Request Status Page');
+    performRequestStatus(props.onLogin);
+  }
+
+  const onLoginPress = () => {
+    console.log('Hello world!');
+    console.log('Username: ' + username);
+    console.log('Password: ' + password);
+
+    performLogin(username, password, props.onLogin);
   };
 
   const handleUsername = usernametext => {
-    consoleLog(usernametext);
+    console.log(usernametext);
     setUsername(usernametext);
   };
 
   const handlePassword = passwordtext => {
-    consoleLog(passwordtext);
+    console.log(passwordtext);
     setPassword(passwordtext);
   };
 
-  const onLoginPress = () => {
-    consoleLog('Hello world!');
-    consoleLog('Username: ' + username);
-    consoleLog('Password: ' + password);
+  const onWritePress = async () => {
+    console.log('sup: attempting write');
+    
+      try {
+        await AsyncStorage.setItem('TASKS', 'I like to save it.');
+      } catch (error) {
+        // Error saving data
+        console.log('sup: Error saving data');
+      }
+    
+  };
 
-    performLogin(username, password);
+  const onReadPress = async () => {
+    console.log('sup: attempting read');
+      try {
+        const value = await AsyncStorage.getItem('TASKS');
+        if (value !== null) {
+          // We have data!!
+          console.log(value);
+        } else {
+          console.log("sup: data was null");
+        }
+      } catch (error) {
+        // Error retrieving data
+        console.log('sup: Error retrieving data');
+      }
   };
 
   return (
@@ -63,6 +96,21 @@ export default function LoginScreen() {
             buttonStyle={styles.loginButton}
             onPress={onLoginPress}
             title="Login"
+          />
+          <Button
+            buttonStyle={styles.loginButton}
+            onPress={onRequestStatus}
+            title="Request Status"
+          />
+          <Button
+            buttonStyle={styles.loginButton}
+            onPress={onWritePress}
+            title="Write"
+          />
+          <Button
+            buttonStyle={styles.loginButton}
+            onPress={onReadPress}
+            title="Read"
           />
         </View>
       </View>

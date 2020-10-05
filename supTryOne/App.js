@@ -3,21 +3,47 @@
  * https://github.com/facebook/react-native
  *
  * @format
- * @flow
+ * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {StatusBar, StyleSheet, View, Text} from 'react-native';
 
-import LoginScreen from './src/login/login.js';
+import HomeScreen from './src/home/home';
+import LoginScreen from './src/login/login';
+import {getLoggedIn} from './src/javascript/profileData';
+// import {initAppStateChange} from './src/javascript/appState';
+
+
 
 export default function App() {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" translucent={true} />
-      <LoginScreen />
-    </>
-  );
+
+  // initAppStateChange(); 
+  const [redraw, setRedraw] = useState(0);
+  const refreshScreen = () => {
+    console.log('sup: refreshScreen');
+    setRedraw(1 - redraw);
+  };
+  const findLogin = () => {
+    console.log('sup: finding login status: ' + getLoggedIn());
+    return getLoggedIn();
+  };
+
+  if (false /*findLogin()*/) {
+    return (
+      <>
+        <StatusBar barStyle="dark-content" translucent={true} />
+        <HomeScreen onLogout={refreshScreen} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <StatusBar barStyle="dark-content" translucent={true} />
+        <LoginScreen onLogin={refreshScreen} />
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
