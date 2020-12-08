@@ -18,9 +18,9 @@ export const readKeyVal = async (key) => {
 
   try {
     const value = await AsyncStorage.getItem(key);
-      // We have data!!
-      console.log(value);
-      return {succ: true, val: value};
+    // We have data!!
+    // console.log('sup: read value: ' + key + '-' + value);
+    return {succ: true, val: value};
   } catch (error) {
     // Error retrieving data
     console.log('sup: Error retrieving data');

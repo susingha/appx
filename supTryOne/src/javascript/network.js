@@ -1,6 +1,6 @@
 var xhr = null;
 
-export const xhrSend = (url, addHeaderRef, responseRef, fdata) => {
+export const xhrSend = (url, addHeaderRef, responseRef, fdata, ctx) => {
   var request;
   console.log('sup: sending xhr: ' + url);
 
@@ -18,12 +18,13 @@ export const xhrSend = (url, addHeaderRef, responseRef, fdata) => {
     if (request.status === 200) {
       // console.log('sup:200 printing response headers:');
       // console.log(request.getAllResponseHeaders());
-      responseRef(request.responseText);
+      responseRef(request.responseText, ctx);
     } else if (request.status === 302) {
       // console.log('sup:302 printing response headers:');
       // console.log(request.getAllResponseHeaders());
     } else {
-      console.warn('error');
+      console.warn('Error: HTTP ' + request.status);
+      console.log(request.responseText);
     }
   };
 
@@ -35,7 +36,7 @@ export const xhrSend = (url, addHeaderRef, responseRef, fdata) => {
   request.open(meth, url, true);
   request.withCredentials = true;
 
-  if (addHeaderRef != null) addHeaderRef(request);
+  if (addHeaderRef != null) addHeaderRef(request, ctx);
 
   request.send(fdata);
 };

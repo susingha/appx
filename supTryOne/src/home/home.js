@@ -1,32 +1,93 @@
 import React from 'react';
-import {performLogout} from '../javascript/httpurl';
+import {performLogout, performRefresh} from '../javascript/browser';
+import {getAutoDials} from '../javascript/profile';
+import Colors from '../javascript/colors';
 
-import styles from './style';
-import {StyleSheet, Keyboard, View, Text, TouchableWithoutFeedback} from 'react-native';
+import styles from '../style/style';
+import {
+  StatusBar,
+  StyleSheet,
+  Keyboard,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {Button} from 'react-native-elements';
+import {ScrollView} from 'react-native-gesture-handler';
+import AutoDialEntry from './autodial';
 
-export default function HomeScreen(props) {
-
+export default function HomeScreen() {
   const onLogoutPress = () => {
-    console.log('sup: loggin out');
-    performLogout(props.onLogout);
+    console.log('sup: logging out');
+    performLogout();
   };
 
+  const onRefreshPress = () => {
+    console.log('sup: refresh data');
+    performRefresh();
+  };
+
+  const initialArr = [
+    {
+      id: 1,
+      color: 'blue',
+      text: 'text1',
+    },
+    {
+      id: 2,
+      color: 'red',
+      text: 'text2',
+    },
+  ];
+  const list = ['a', 'b', 'c'];
+
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}>
-      <View style={styles.homeScreenContainer}>
-        <View style={styles.loginFormView}>
-          <Text style={styles.logoText}>Home</Text>
-          <Button
-            buttonStyle={styles.logoutButton}
-            onPress={onLogoutPress}
-            title="Logout"
-          />
+    <>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={Colors.logoBackground}
+        translucent={false}
+      />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
+        <View style={styles.topLevelView}>
+          <View style={styles.titleBarView}>
+            <Text style={styles.logoTextSmall}>Logo</Text>
+          </View>
+          <View style={styles.bodyView}>
+            <ScrollView keyboardDismissMode="on-drag">
+              <Button
+                buttonStyle={styles.loginButton}
+                onPress={onLogoutPress}
+                title="Logout"
+              />
+              <Button
+                buttonStyle={styles.loginButton}
+                onPress={onRefreshPress}
+                title="Refresh"
+              />
+
+              {getAutoDials().map((item) => (
+                <AutoDialEntry
+                  key={item.dnis}
+                  ad_item={item}
+                  ad_desc={item.description}
+                  ad_dest={item.destination}
+                />
+              ))}
+            </ScrollView>
+          </View>
+          <View style={styles.footerView}>
+            <Text style={styles.logoTextSmall}>Tabs</Text>
+          </View>
+
+          {/*
+        <Text style={styles.logoText}>This is how you can comment</Text>       
+        */}
         </View>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </>
   );
 }

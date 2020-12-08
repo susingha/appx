@@ -1,0 +1,173 @@
+[Sun Nov 29 2020 02:20:06.403]  LOG      sup: sending xhr: https://services.indiald.com/eu/__z_services.asp?mode=customer_status_ext&customer=3670769222
+[Sun Nov 29 2020 02:20:06.474]  LOG      {
+  "request_id": "{3BCCE171-7572-2BBB-375B-91778780B033}",
+  "sql_log": [
+    "query_time:002 ms: select * from parent_cos",
+    "query_time:001 ms: SELECT a.account_id, aa.alias FROM account_aliases aa, accounts a, customers c WHERE aa.dnis = '*' AND aa.account_alias_type = 1 AND aa.account_id = a.account_id AND c.customer_id=a.customer_id AND (c.customer = 0x33363730373639323232 OR c.customer_id = 3670769222) ",
+    "query_time:001 ms: SELECT a.account_id, speed.entry, speed.number, speed.description FROM speed, accounts a, customers c WHERE speed.account = a.account AND c.customer_id=a.customer_id AND (c.customer = 0x33363730373639323232 OR c.customer_id = 3670769222) ",
+    "query_time:001 ms: SELECT a.account_id, ad.autodialer_id, ad.dnis, ad.destination, ad.description FROM autodialer ad, accounts a, customers c WHERE ad.account = a.account AND c.customer_id=a.customer_id AND (c.customer = 0x33363730373639323232 OR c.customer_id = 3670769222) "
+  ],
+  "errors": [],
+  "query": [],
+  "mode": "customer_status_ext",
+  "callback": "",
+  "disabled": "disabled",
+  "session": "464057716",
+  "customer": "3670769222",
+  "customer_id": "-1",
+  "utmz": "",
+  "debug": false,
+  "homeboy": 0,
+  "customer_record_ext": [
+    [
+      {
+        "account_id": "294492",
+        "alias": "4086470304"
+      },
+      {
+        "account_id": "294492",
+        "alias": "6095169962"
+      },
+      {
+        "account_id": "294492",
+        "alias": "4087079946"
+      }
+    ],
+    [],
+    [
+      {
+        "account_id": "294492",
+        "autodialer_id": "3855751",
+        "dnis": "6054772000",
+        "destination": "011919432439593",
+        "description": "Home"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "3945174",
+        "dnis": "6054772001",
+        "destination": "011918336860667",
+        "description": "Maa Nexus"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "4136188",
+        "dnis": "6054772002",
+        "destination": "011918274882061",
+        "description": "Maa Nokia"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "4245361",
+        "dnis": "6054772003",
+        "destination": "011919163178521",
+        "description": "Riku"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "4363541",
+        "dnis": "6054772005",
+        "destination": "011919899837375",
+        "description": "Mummy"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "4686375",
+        "dnis": "6054772006",
+        "destination": "011919899844192",
+        "description": "Babuji"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "4858637",
+        "dnis": "6054772007",
+        "destination": "011919968999552",
+        "description": "Vivek"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "4971830",
+        "dnis": "6054772008",
+        "destination": "011919968643426",
+        "description": "Tina"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "5109556",
+        "dnis": "6054772009",
+        "destination": "011917838681742",
+        "description": "Mamai Dida"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221444",
+        "dnis": "6054772010",
+        "destination": "011918376871034",
+        "description": "Supratik VDFONE"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221446",
+        "dnis": "6054772012",
+        "destination": "011911242641407",
+        "description": " airindia1"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221447",
+        "dnis": "6054772013",
+        "destination": "011912026231407",
+        "description": " airindia2"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221448",
+        "dnis": "6054772014",
+        "destination": null,
+        "description": " "
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221449",
+        "dnis": "6054772015",
+        "destination": null,
+        "description": " "
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221450",
+        "dnis": "6054772016",
+        "destination": null,
+        "description": " "
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221451",
+        "dnis": "6054772017",
+        "destination": null,
+        "description": " "
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221452",
+        "dnis": "6054772018",
+        "destination": null,
+        "description": " "
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11221453",
+        "dnis": "6054772019",
+        "destination": "011919748111930",
+        "description": " Chatterjee"
+      },
+      {
+        "account_id": "294492",
+        "autodialer_id": "11261373",
+        "dnis": "6054772004",
+        "destination": "011919434547865",
+        "description": "Natun Mama"
+      }
+    ]
+  ]
+}
