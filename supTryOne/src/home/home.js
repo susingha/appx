@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   Keyboard,
+  SafeAreaView,
   View,
   Text,
   TouchableWithoutFeedback,
@@ -48,46 +49,38 @@ export default function HomeScreen() {
         backgroundColor={Colors.logoBackground}
         translucent={false}
       />
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-        }}>
-        <View style={styles.topLevelView}>
-          <View style={styles.titleBarView}>
-            <Text style={styles.logoTextSmall}>Logo</Text>
-          </View>
-          <View style={styles.bodyView}>
-            <ScrollView keyboardDismissMode="on-drag">
-              <Button
-                buttonStyle={styles.loginButton}
-                onPress={onLogoutPress}
-                title="Logout"
-              />
-              <Button
-                buttonStyle={styles.loginButton}
-                onPress={onRefreshPress}
-                title="Refresh"
-              />
 
-              {getAutoDials().map((item) => (
-                <AutoDialEntry
-                  key={item.dnis}
-                  ad_item={item}
-                  ad_desc={item.description}
-                  ad_dest={item.destination}
-                />
-              ))}
-            </ScrollView>
-          </View>
-          <View style={styles.footerView}>
-            <Text style={styles.logoTextSmall}>Tabs</Text>
-          </View>
-
-          {/*
-        <Text style={styles.logoText}>This is how you can comment</Text>       
-        */}
+      <View style={styles.topLevelView}>
+        <View style={styles.titleBarView}>
+          <Text style={styles.logoTextSmall}>Logo</Text>
         </View>
-      </TouchableWithoutFeedback>
+        <View style={styles.bodyView}>
+          <ScrollView keyboardDismissMode="on-drag">
+            <Button
+              buttonStyle={styles.loginButton}
+              onPress={onLogoutPress}
+              title="Logout"
+            />
+            <Button
+              buttonStyle={styles.loginButton}
+              onPress={onRefreshPress}
+              title="Refresh"
+            />
+
+            {getAutoDials().map((item) => (
+              <AutoDialEntry
+                key={item.dnis}
+                ad_item={item}
+                ad_desc={item.description}
+                ad_dest={item.destination}
+              />
+            ))}
+          </ScrollView>
+        </View>
+        <View style={styles.footerView}>
+          <Text style={styles.logoTextSmall}>Tabs</Text>
+        </View>
+      </View>
     </>
   );
 }

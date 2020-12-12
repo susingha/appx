@@ -16,7 +16,7 @@ const processHTTPFailed = (ctx) => {
 }
 
 const processHTTPSuccess = (ctx) => {
-  console.log('processHTTPSuccess: HTTP Req Success');
+  console.log('processHTTPSuccess: HTTP Req Success ' + ctx.user + " " + ctx.pass);
   if(validateProfileData(ctx.user, ctx.pass)) {
     if (ctx.succ_cb) ctx.succ_cb();
   } else {

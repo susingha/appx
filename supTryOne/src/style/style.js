@@ -19,7 +19,6 @@ export default {
     borderBottomLeftRadius:15,
   },
   bodyView: {
-    
     flex: 1,
     marginLeft: 10,
     marginRight: 10,
@@ -44,7 +43,10 @@ export default {
     justifyContent: 'center',
     padding: 11,
 
-    elevation: 5, // sup: use shadow for IOS
+    elevation: 3,
+    shadowColor: '#000000',
+    shadowRadius: 1,
+    shadowOpacity: 0.1,
   },
 
   cardHeaderText: {},

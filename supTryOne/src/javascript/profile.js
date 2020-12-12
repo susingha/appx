@@ -144,6 +144,8 @@ const writeProfileData = async (username, password, loginvar) => {
   }
 
   jsLoggedin = loginvar;
+  jsUser = username;
+  jsPass = password;
   console.log('writeProfileData: creds saved');
   return true;
 };

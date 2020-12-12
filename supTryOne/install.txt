@@ -1,0 +1,40 @@
+recreating project area:
+========================
+init a project with react-native init projectName
+run on android and ios
+cd into project folder
+
+SOFT LINKS WONT WORK FOR FILES OR FOLDERS
+IT NEEDS TO COMPUTE CHECKSUM
+
+mv package.json package.json.bkp
+mv App.js  App.js.bkp
+
+rsync-out.sh
+git/appx/supTryOne/package.json
+git/appx/supTryOne/App.js
+git/appx/supTryOne/src/
+
+npm install
+pod install
+
+
+install react-native-vector-icons. It does not work directly
+    react-native link is deprecated. Does not work.
+    follow instructions at https://www.npmjs.com/package/react-native-vector-icons
+
+    IOS - Option: With CocoaPods
+    Add the following to your Podfile and run pod update:
+    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+    Edit Info.plist as described above.
+
+    Android - Option: With Gradle (recommended)
+    Edit android/app/build.gradle 
+    apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+
+
+change RCT_METRO_PORT in node_modules/react-native/React/Base/RCTDefines.h
+run on android and ios
+
+rsync-in.sh

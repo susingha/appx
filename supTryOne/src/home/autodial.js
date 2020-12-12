@@ -15,6 +15,10 @@ import {
 } from 'react-native';
 
 export default function AutoDialEntry(props) {
+  const onPress = () => {
+    console.log('sup: edit to modal pressed');
+  };
+
   const onCallPress = () => {
     console.log('sup: call button pressed');
   };
@@ -33,25 +37,24 @@ export default function AutoDialEntry(props) {
     item.dnis.substring(6);
 
   return (
-    <>
-      <View style={styles.cardViewTop}>
-        <View style={{flex: 1}}>
-          <Text style={styles.cardTitleText}>{item.description}</Text>
-          <Text style={styles.cardDescrText}>{item.destination}</Text>
-        </View>
-
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <Button
-            title={phone_text}
-            titleStyle={styles.phoneNumberText}
-            onPress={onCallPress}
-            buttonStyle={styles.phoneButton}
-            icon={<Icon name="call" size={15} color="white" />}
-          />
-
-          {/* <Button buttonStyle={styles.loginButton} title="Login" /> */}
-        </View>
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={onPress}
+      style={styles.cardViewTop}>
+      <View style={{flex: 1}}>
+        <Text style={styles.cardTitleText}>{item.description}</Text>
+        <Text style={styles.cardDescrText}>{item.destination}</Text>
       </View>
-    </>
+
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Button
+          title={phone_text}
+          titleStyle={styles.phoneNumberText}
+          onPress={onCallPress}
+          buttonStyle={styles.phoneButton}
+          icon={<Icon name="call" type="material" size={17} color="white" />}
+        />
+      </View>
+    </TouchableOpacity>
   );
 }
