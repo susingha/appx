@@ -31,7 +31,6 @@ export const processJSONValid = (json) => {
   var jsonPretty = JSON.stringify(jsonTree1, null, 2);
   console.log(jsonPretty);
   */
-  
 
   return true;
 };
@@ -56,16 +55,17 @@ export const processJSONValidExt = (json) => {
   var jsonPretty = JSON.stringify(jsonTree2, null, 2);
   console.log(jsonPretty);
   */
-  
 
   return true;
 };
 
-
 export const getAutoDials = () => {
-  if (jsonTree2 == null) return null;
-  return jsonTree2.customer_record_ext[2]
-}
+  if (jsonTree2 == null) {
+    console.error('getAutoDials returning null');
+    return null;
+  }
+  return jsonTree2.customer_record_ext[2];
+};
 
 export const validateProfileData = (username, password) => {
   if (jsonTree1 == null) {
@@ -80,7 +80,7 @@ export const validateProfileData = (username, password) => {
   }
 
   // sup:do add JSON checks here
-  console.log("================ sup:b ================");
+  console.log('================ sup:b ================');
   console.log(jsonTree1.request_id);
   console.log(jsonTree1.errors);
   console.log(jsonTree1.query);
@@ -96,15 +96,20 @@ export const validateProfileData = (username, password) => {
   console.log(jsonTree1.customer_record.LAST_NAME);
   console.log(jsonTree1.customer_record.LOCAL_PHONE);
   console.log(jsonTree1.customer_record.cos);
-  console.log("================ sup:m ================");
+  console.log('================ sup:m ================');
   console.log(jsonTree2.request_id);
   console.log(jsonTree2.debug);
   console.log(jsonTree2.homeboy);
   console.log(jsonTree2.customer_record_ext[2][0]);
-  console.log("================ sup:e ================");
+  console.log('================ sup:e ================');
 
   if (jsonTree1.customer != username) {
-    console.log("username: " + username + " does not match customer id: " + jsonTree1.customer);
+    console.log(
+      'username: ' +
+        username +
+        ' does not match customer id: ' +
+        jsonTree1.customer,
+    );
     setLoggedOut();
     return false;
   }
@@ -151,7 +156,8 @@ const writeProfileData = async (username, password, loginvar) => {
 };
 
 const readProfileData = async () => {
-  var ret, sign = null;
+  var ret,
+    sign = null;
 
   ret = await readKeyVal('json1');
   if (ret.succ == true) {
@@ -189,20 +195,12 @@ const readProfileData = async () => {
     return false;
   }
 
-  if (sign == true.toString())
-    jsLoggedin = true;
-  else
-    jsLoggedin = false;
-
+  if (sign == true.toString()) jsLoggedin = true;
+  else jsLoggedin = false;
 
   console.log('readProfileData: creds loaded');
   return true;
 };
-
-
-
-
-
 
 export const getJSUser = () => {
   return jsUser;
@@ -224,7 +222,7 @@ export const setLoggedIn = async (username, password) => {
   var ret = await writeProfileData(username, password, true);
   appRefresh();
   return ret;
-}
+};
 
 export const setLoggedOut = async () => {
   jsonTree1 = null;

@@ -1,6 +1,4 @@
 import React from 'react';
-import Colors from '../javascript/colors';
-import LinearGradient from 'react-native-linear-gradient';
 import {Button, Icon} from 'react-native-elements';
 import styles from '../style/style';
 import {
@@ -15,17 +13,19 @@ import {
 } from 'react-native';
 
 export default function AutoDialEntry(props) {
-  const onPress = () => {
-    console.log('sup: edit to modal pressed');
+  const onCardPress = (idx) => {
+    console.log('sup: edit to modal pressed: ' + idx);
+    props.onPress(idx);
   };
 
-  const onCallPress = () => {
-    console.log('sup: call button pressed');
+  const onCallPress = (item) => {
+    console.log('sup: call ' + item.dnis);
   };
 
   const item = props.ad_item;
+  const indx = props.ad_indx;
   console.log(
-    'sup: ' + item.dnis + ' -  ' + item.description + ' -  ' + item.destination,
+    'sup: ' + indx + ' - ' + item.dnis + ' -  ' + item.description + ' -  ' + item.destination,
   );
 
   const phone_text =
@@ -39,7 +39,7 @@ export default function AutoDialEntry(props) {
   return (
     <TouchableOpacity
       activeOpacity={0.2}
-      onPress={onPress}
+      onPress={onCardPress.bind(this, indx)}
       style={styles.cardViewTop}>
       <View style={{flex: 1}}>
         <Text style={styles.cardTitleText}>{item.description}</Text>
@@ -50,7 +50,7 @@ export default function AutoDialEntry(props) {
         <Button
           title={phone_text}
           titleStyle={styles.phoneNumberText}
-          onPress={onCallPress}
+          onPress={onCallPress.bind(this, item)}
           buttonStyle={styles.phoneButton}
           icon={<Icon name="call" type="material" size={17} color="white" />}
         />
