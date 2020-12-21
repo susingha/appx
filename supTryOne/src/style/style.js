@@ -29,13 +29,13 @@ export default {
   cardViewTop: {
     flex: 1,
     flexDirection: 'row',
-
+    justifyContent: 'center',
     borderRadius: 17,
     marginTop: 8,
     marginBottom: 8,
 
     backgroundColor: Colors.cardBackground,
-    justifyContent: 'center',
+
     padding: 7,
     paddingLeft: 10,
     paddingRight: 10,
@@ -68,13 +68,18 @@ export default {
     letterSpacing: 1,
     textAlign: 'center',
   },
+  phoneNumberView: {
+    backgroundColor: '#E65C00',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 5,
+  },
   phoneButton: {
     backgroundColor: '#E65C00',
     borderColor: '#F07403',
     borderWidth: 1,
     borderRadius: 15,
   },
-
 
   // sup: modal menu
   menuModalFull: {
@@ -107,6 +112,17 @@ export default {
     paddingLeft: 20,
   },
 
+  // sup: edit modal
+  editModalFull: {
+    margin: 0,
+  },
+  editModalList: {
+    backgroundColor: '#e6e6e6',
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+  },
+
   logoTextSmall: {
     fontSize: 30,
     fontWeight: '800',
@@ -123,31 +139,74 @@ export default {
   },
 
   loginFormTextInput: {
-    height: 43,
-    fontSize: 15,
-    borderRadius: 5,
+    height: 50,
+    fontSize: 20,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#eaeaea',
     backgroundColor: '#fafafa',
     paddingLeft: 10,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  loginButton: {
-    backgroundColor: '#3897f1',
-    borderRadius: 5,
-    height: 45,
     marginTop: 5,
     marginBottom: 5,
   },
 
-  // sup: unused
-  linearGradient: {
-    borderColor: '#AC4509',
-    borderWidth: 4,
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
+  textInputPhone: {
+    height: 50,
+    fontSize: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#eaeaea',
+    backgroundColor: '#fafafa',
+    paddingLeft: 10,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  pickerCountryCode: {
+    inputIOS: {
+      height: 50,
+      fontSize: 20,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#eaeaea',
+      backgroundColor: '#fafafa',
+      paddingLeft: 10,
+      marginTop: 5,
+      marginBottom: 5,
+      color: 'black',
+    },
+    inputAndroid: {
+      height: 50,
+      fontSize: 20,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#eaeaea',
+      backgroundColor: '#fafafa',
+      paddingLeft: 10,
+      marginTop: 5,
+      marginBottom: 5,
+      color: 'black',
+    },
+  },
+
+  loginButton: {
+    backgroundColor: '#3897f1',
+    borderRadius: 10,
+    height: 45,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  cencelButton: {
+    backgroundColor: 'grey',
+    borderRadius: 10,
+    height: 45,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  saveButton: {
+    backgroundColor: '#3897f1',
+    borderRadius: 10,
+    height: 45,
+    marginTop: 5,
+    marginBottom: 5,
   },
 };

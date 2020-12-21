@@ -13,6 +13,7 @@ ctx.fail_cb
 const processHTTPFailed = (ctx) => {
   console.log('processHTTPFailed: HTTP Req Failed');
   if (ctx.fail_cb) ctx.fail_cb();
+  else setLoggedOut();
 }
 
 const processHTTPSuccess = (ctx) => {

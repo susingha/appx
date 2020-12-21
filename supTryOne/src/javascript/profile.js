@@ -18,12 +18,10 @@ export const processJSONValid = (json) => {
   try {
     jsonTree1 = JSON.parse(json);
   } catch (e) {
-    setLoggedOut();
     return false;
   }
 
   if (jsonTree1 == null) {
-    setLoggedOut();
     return false;
   }
 
@@ -42,12 +40,10 @@ export const processJSONValidExt = (json) => {
   try {
     jsonTree2 = JSON.parse(json);
   } catch (e) {
-    setLoggedOut();
     return false;
   }
 
   if (jsonTree2 == null) {
-    setLoggedOut();
     return false;
   }
 

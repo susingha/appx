@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {performLogout, performRefresh} from '../javascript/browser';
 import {getAutoDials} from '../javascript/profile';
 import Colors from '../javascript/colors';
+import Enums from '../javascript/enums';
 import Modal from 'react-native-modal';
 
 import styles from '../style/style';
@@ -17,13 +18,46 @@ import {
 import {Button, Divider} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import AutoDialEntry from './autodial';
+import AutoDialEdit from './autodial-edit';
 
 export default function HomeScreen() {
-  const [menuVisible, setMenuVisible] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
+  const [menuOption, setMenuOption] = useState(0);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(true);
 
+  // sup: Edit Modal
+  const editDismiss = () => {
+    setEditVisible(false);
+  };
+  const editShow = () => {
+    console.log('sup: show edit modal');
+    setMenuOption(0);
+    setEditVisible(true);
+  };
+
+  const editOnSave = (descriptionText, countryCode, phoneNumber) => {
+    console.log('sup: saved: Index: ' + editIndex);
+    console.log('sup: saved: ' + descriptionText);
+    console.log('sup: saved: ' + countryCode);
+    console.log('sup: saved: ' + phoneNumber);
+    editDismiss();
+  }
+
+
+  // sup: menu Modal
   const menuDismiss = () => {
     setMenuVisible(false);
+  };
+  const menuDismissToEdit = () => {
+    setMenuOption(Enums.editOption);
+    menuDismiss();
+  };
+  const menuDismissToImport = () => {
+    menuDismiss();
+  };
+  const menuDismissToExport = () => {
+    menuDismiss();
   };
   const menuShow = (idx) => {
     console.log(
@@ -31,6 +65,17 @@ export default function HomeScreen() {
     );
     setEditIndex(idx);
     setMenuVisible(true);
+  };
+
+  const processMenuOption = () => {
+    switch (menuOption) {
+      case Enums.editOption:
+        editShow();
+      case Enums.importOption:
+        break;
+      case Enums.exportOption:
+        break;
+    }
   };
 
   const onLogoutPress = () => {
@@ -51,12 +96,14 @@ export default function HomeScreen() {
         translucent={false}
       />
 
+      {/* Options Menu Modal */}
       <Modal
         isVisible={menuVisible}
         onSwipeComplete={menuDismiss}
         onBackdropPress={menuDismiss}
         onBackButtonPress={menuDismiss}
         swipeDirection={['down']}
+        onModalHide={processMenuOption}
         style={styles.menuModalFull}>
         <View style={styles.menuModalList}>
           <TouchableOpacity activeOpacity={0.2} style={styles.menuModalHeader}>
@@ -65,13 +112,13 @@ export default function HomeScreen() {
               {getAutoDials()[editIndex].dnis}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismiss}>
+          <TouchableOpacity activeOpacity={0.2} onPress={menuDismissToEdit}>
             <Text style={styles.menuModalOption}>Edit</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismiss}>
+          <TouchableOpacity activeOpacity={0.2} onPress={menuDismissToImport}>
             <Text style={styles.menuModalOption}>Import from Contact</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismiss}>
+          <TouchableOpacity activeOpacity={0.2} onPress={menuDismissToExport}>
             <Text style={styles.menuModalOption}>Save to Contact</Text>
           </TouchableOpacity>
 
@@ -83,18 +130,35 @@ export default function HomeScreen() {
         </View>
       </Modal>
 
+      {/* Edit Page Modal */}
+
+      <Modal
+        isVisible={editVisible}
+        onBackdropPress={editDismiss}
+        onBackButtonPress={editDismiss}
+        swipeDirection={['down']}
+        style={styles.editModalFull}>
+        <AutoDialEdit
+          onSave={editOnSave}
+          onCancel={editDismiss}
+          ad_item={getAutoDials()[editIndex]}
+        />
+      </Modal>
+
       <View style={styles.topLevelView}>
         <View style={styles.titleBarView}>
           <Text style={styles.logoTextSmall}>Logo</Text>
         </View>
         <View style={styles.bodyView}>
           <ScrollView keyboardDismissMode="on-drag">
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: true}}>
+            <View
+              style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
               <Button
                 buttonStyle={styles.loginButton}
                 onPress={onLogoutPress}
                 title="Logout"
               />
+
               <Button
                 buttonStyle={styles.loginButton}
                 onPress={onRefreshPress}

@@ -46,7 +46,8 @@ export default function LoginScreen(props) {
         Keyboard.dismiss();
       }}>
 
-      <View style={styles.topLevelContainer}>
+      <View style={styles.topLevelView}>
+      <View style={styles.bodyView}>
         <Text style={styles.logoText}>Instamobile</Text>
 
         <TextInput
@@ -69,6 +70,7 @@ export default function LoginScreen(props) {
           onPress={onLoginPress}
           title="Login"
         />
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );

@@ -24,9 +24,6 @@ export default function AutoDialEntry(props) {
 
   const item = props.ad_item;
   const indx = props.ad_indx;
-  console.log(
-    'sup: ' + indx + ' - ' + item.dnis + ' -  ' + item.description + ' -  ' + item.destination,
-  );
 
   const phone_text =
     ' (' +
