@@ -81,37 +81,6 @@ export default {
     borderRadius: 15,
   },
 
-  // sup: modal menu
-  menuModalFull: {
-    justifyContent: 'flex-end',
-    margin: 0,
-  },
-  menuModalList: {
-    backgroundColor: '#e6e6e6',
-    padding: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
-  menuModalHeader: {
-    backgroundColor: '#cccccc',
-    borderRadius: 5,
-  },
-  menuModalTitle: {
-    fontSize: 25,
-    color: '#4d4d4d',
-    padding: 8,
-    textAlign: 'left',
-    paddingLeft: 20,
-  },
-  menuModalOption: {
-    fontSize: 18,
-    color: '#4d4d4d',
-    padding: 8,
-    textAlign: 'left',
-    paddingLeft: 20,
-  },
-
   // sup: edit modal
   editModalFull: {
     margin: 0,

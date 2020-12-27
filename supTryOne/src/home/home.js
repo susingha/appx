@@ -17,66 +17,32 @@ import {
 } from 'react-native';
 import {Button, Divider} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
-import AutoDialEntry from './autodial';
+import AutoDialEntry from './autodial-card';
 import AutoDialEdit from './autodial-edit';
 
 export default function HomeScreen() {
   const [editIndex, setEditIndex] = useState(0);
-  const [menuOption, setMenuOption] = useState(0);
-  const [menuVisible, setMenuVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(true);
 
   // sup: Edit Modal
   const editDismiss = () => {
     setEditVisible(false);
   };
-  const editShow = () => {
-    console.log('sup: show edit modal');
-    setMenuOption(0);
+  const editShow = (idx) => {
+    console.log('sup: show edit modal for ' + idx);
+    setEditIndex(idx);
     setEditVisible(true);
   };
-
-  const editOnSave = (descriptionText, countryCode, phoneNumber) => {
-    console.log('sup: saved: Index: ' + editIndex);
-    console.log('sup: saved: ' + descriptionText);
-    console.log('sup: saved: ' + countryCode);
-    console.log('sup: saved: ' + phoneNumber);
+  const editOnSave = (item_new) => {
+    console.log('sup: new:1 ' + item_new.dnis);
+    console.log('sup: new:2 ' + item_new.description);
+    console.log('sup: new:3 ' + item_new.destination);
     editDismiss();
   }
+  
 
 
-  // sup: menu Modal
-  const menuDismiss = () => {
-    setMenuVisible(false);
-  };
-  const menuDismissToEdit = () => {
-    setMenuOption(Enums.editOption);
-    menuDismiss();
-  };
-  const menuDismissToImport = () => {
-    menuDismiss();
-  };
-  const menuDismissToExport = () => {
-    menuDismiss();
-  };
-  const menuShow = (idx) => {
-    console.log(
-      'sup: showing menu for item: ' + idx + ' ' + getAutoDials()[idx].dnis,
-    );
-    setEditIndex(idx);
-    setMenuVisible(true);
-  };
 
-  const processMenuOption = () => {
-    switch (menuOption) {
-      case Enums.editOption:
-        editShow();
-      case Enums.importOption:
-        break;
-      case Enums.exportOption:
-        break;
-    }
-  };
 
   const onLogoutPress = () => {
     console.log('sup: logging out');
@@ -96,42 +62,7 @@ export default function HomeScreen() {
         translucent={false}
       />
 
-      {/* Options Menu Modal */}
-      <Modal
-        isVisible={menuVisible}
-        onSwipeComplete={menuDismiss}
-        onBackdropPress={menuDismiss}
-        onBackButtonPress={menuDismiss}
-        swipeDirection={['down']}
-        onModalHide={processMenuOption}
-        style={styles.menuModalFull}>
-        <View style={styles.menuModalList}>
-          <TouchableOpacity activeOpacity={0.2} style={styles.menuModalHeader}>
-            <Text style={styles.menuModalTitle}>
-              {getAutoDials()[editIndex].description} -{' '}
-              {getAutoDials()[editIndex].dnis}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismissToEdit}>
-            <Text style={styles.menuModalOption}>Edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismissToImport}>
-            <Text style={styles.menuModalOption}>Import from Contact</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismissToExport}>
-            <Text style={styles.menuModalOption}>Save to Contact</Text>
-          </TouchableOpacity>
-
-          <Divider />
-
-          <TouchableOpacity activeOpacity={0.2} onPress={menuDismiss}>
-            <Text style={styles.menuModalOption}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
       {/* Edit Page Modal */}
-
       <Modal
         isVisible={editVisible}
         onBackdropPress={editDismiss}
@@ -173,7 +104,7 @@ export default function HomeScreen() {
                 ad_item={item}
                 ad_desc={item.description}
                 ad_dest={item.destination}
-                onPress={menuShow}
+                onPress={editShow}
               />
             ))}
           </ScrollView>

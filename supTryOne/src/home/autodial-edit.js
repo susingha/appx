@@ -101,6 +101,18 @@ export default function AutoDialEdit(props) {
     setDescriptionText(textinput);
   };
 
+  const handleSavePress = (desc, code, phone) => {
+    var ad_item_new = {dnis: null, description: null, destination: null};
+    console.log('sup: saved: ' + desc + ' ' + code + ' ' + phone);
+    ad_item_new.dnis = props.ad_item.dnis;
+    ad_item_new.description = desc;
+    ad_item_new.destination = '011' + code + phone;
+    if (code === '1') {
+      ad_item_new.destination = phone;
+    }
+    props.onSave(ad_item_new);
+  };
+
   return (
     <View style={styles.editModalList}>
       <View style={styles.phoneNumberView}>
@@ -146,7 +158,12 @@ export default function AutoDialEdit(props) {
           <Button
             buttonStyle={styles.saveButton}
             title="Save"
-            onPress={props.onSave.bind(this, descriptionText, countryCode, phoneNumber)}
+            onPress={handleSavePress.bind(
+              this,
+              descriptionText,
+              countryCode,
+              phoneNumber,
+            )}
           />
         </View>
       </View>
