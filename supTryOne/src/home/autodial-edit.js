@@ -2,20 +2,25 @@ import React, {useState} from 'react';
 import {Button} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import parsePhoneNumber from 'libphonenumber-js';
+
+import {View, Text, TextInput} from 'react-native';
+
 import styles from '../style/style';
-import {
-  StatusBar,
-  StyleSheet,
-  Keyboard,
-  View,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {getAutoDials, setAutoDials} from '../javascript/profile';
+import {performSaveAutoDial, performRefresh} from '../javascript/browser';
 
 export default function AutoDialEdit(props) {
+  console.log('sup:editing');
+  console.log(JSON.stringify(props.ad_item));
+
+  var ad_item_new = {
+    account_id: props.ad_item.account_id,
+    autodialer_id: props.ad_item.autodialer_id,
+    dnis: props.ad_item.dnis,
+    destination: null,
+    description: null,
+  };
+
   const listCountryCodes = [
     {value: '61', label: 'Australia (+61)'},
     {value: '43', label: 'Austria (+43)'},
@@ -46,6 +51,7 @@ export default function AutoDialEdit(props) {
     {value: '1', label: 'US/Canada (+1)'},
   ];
 
+  const ad_item_idx = props.ad_indx;
   const phone_text =
     ' (' +
     props.ad_item.dnis.substring(0, 3) +
@@ -101,16 +107,108 @@ export default function AutoDialEdit(props) {
     setDescriptionText(textinput);
   };
 
+  const handleSaveResponse = (res) => {
+    var json_res = null;
+    try {
+      json_res = JSON.parse(res.trim().slice(1, -2)).fields[1].validated
+        .field_value.auto[ad_item_idx];
+    } catch (e) {
+      console.warn('ERROR: bad JSON in response ' + res);
+      return;
+    }
+
+    if (json_res.dnis != ad_item_new.dnis) {
+      console.warn(
+        'ERROR: item not updated. dnis mismatch: ' +
+          json_res.dnis +
+          ' - ' +
+          ad_item_new.dnis,
+      );
+      return;
+    }
+    if (json_res.description != ad_item_new.description) {
+      console.warn(
+        'ERROR: item not updated. description mismatch: ' +
+          json_res.description +
+          ' - ' +
+          ad_item_new.description,
+      );
+      return;
+    }
+    if (json_res.destination != ad_item_new.destination) {
+      console.warn(
+        'ERROR: item not updated. destination mismatch: ' +
+          json_res.destination +
+          ' - ' +
+          ad_item_new.destination,
+      );
+      return;
+    }
+
+    if (setAutoDials(ad_item_new, ad_item_idx) == null) return;
+
+    props.onSave(ad_item_new, ad_item_idx);
+  };
+
+  const handleSaveRequest = (item_new, item_idx) => {
+    var json_head = {
+      dialer: {
+        auto: JSON.parse(JSON.stringify(getAutoDials())),
+      },
+    };
+    var json_auto = json_head.dialer.auto;
+
+    if (json_auto[item_idx].dnis !== item_new.dnis) {
+      console.warn(
+        'ERROR: in item ' +
+          JSON.stringify(item_new) +
+          ' at edit index: ' +
+          item_idx +
+          ' dnis mismatch: ' +
+          json_auto[item_idx].dnis +
+          ' !== ' +
+          item_new.dnis,
+      );
+    }
+    if (json_auto[item_idx].account_id !== item_new.account_id) {
+      console.warn(
+        'ERROR: in item ' +
+          JSON.stringify(item_new) +
+          ' at edit index: ' +
+          item_idx +
+          ' dnis mismatch: ' +
+          json_auto[item_idx].account_id +
+          ' !== ' +
+          item_new.account_id,
+      );
+    }
+    if (json_auto[item_idx].autodialer_id !== item_new.autodialer_id) {
+      console.warn(
+        'ERROR: in item ' +
+          JSON.stringify(item_new) +
+          ' at edit index: ' +
+          item_idx +
+          ' dnis mismatch: ' +
+          json_auto[item_idx].autodialer_id +
+          ' !== ' +
+          item_new.autodialer_id,
+      );
+    }
+
+    json_auto[item_idx] = item_new;
+    console.log('sup: ' + JSON.stringify(json_head));
+    performSaveAutoDial(json_head, handleSaveResponse);
+  };
+
   const handleSavePress = (desc, code, phone) => {
-    var ad_item_new = {dnis: null, description: null, destination: null};
     console.log('sup: saved: ' + desc + ' ' + code + ' ' + phone);
-    ad_item_new.dnis = props.ad_item.dnis;
     ad_item_new.description = desc;
     ad_item_new.destination = '011' + code + phone;
     if (code === '1') {
       ad_item_new.destination = phone;
     }
-    props.onSave(ad_item_new);
+
+    handleSaveRequest(ad_item_new, ad_item_idx);
   };
 
   return (

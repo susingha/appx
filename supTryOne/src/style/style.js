@@ -24,13 +24,16 @@ export default {
   footerView: {
     backgroundColor: '#50B9AA',
   },
+  toastView: {
+    backgroundColor: 'darkred',
+  },
 
   // sup: card
   cardViewTop: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    borderRadius: 17,
+    borderRadius: 10,
     marginTop: 8,
     marginBottom: 8,
 
@@ -40,10 +43,14 @@ export default {
     paddingLeft: 10,
     paddingRight: 10,
 
-    elevation: 3,
-    shadowColor: '#000000',
-    shadowRadius: 1,
-    shadowOpacity: 0.1,
+
+    /*
+    // sup: replace with Card from react-native-paper
+    elevation: 3, // android
+    shadowColor: '#000000', // ios
+    shadowRadius: 1, // ios
+    shadowOpacity: 0.1, // ios
+    */
   },
 
   cardHeaderText: {},
@@ -62,6 +69,8 @@ export default {
   },
   cardBodyText: {},
   cardFooterText: {},
+
+
 
   phoneNumberText: {
     fontSize: 15,

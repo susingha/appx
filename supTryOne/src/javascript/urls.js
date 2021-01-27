@@ -4,4 +4,5 @@ export default {
   writelogPage: 'https://services.indiald.com/eu/writelog.asp',
   homePage: 'https://services.indiald.com/eu/home.asp',
   statusPage: 'https://services.indiald.com/eu/__z_services.asp',
+  badPage: 'https://badinternetpage.com/noendpoint.asp',
 };

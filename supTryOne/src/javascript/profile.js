@@ -62,6 +62,17 @@ export const getAutoDials = () => {
   }
   return jsonTree2.customer_record_ext[2];
 };
+export const setAutoDials = (item, idx) => {
+  if (jsonTree2 == null) {
+    console.error('getAutoDials jsonTree2 is null');
+    return null;
+  }
+  jsonTree2.customer_record_ext[2][idx] = JSON.parse(JSON.stringify(item));
+
+  if (validateProfileData(jsUser, jsPass) == false) return null;
+  
+  return jsonTree2.customer_record_ext[2];;
+};
 
 export const validateProfileData = (username, password) => {
   if (jsonTree1 == null) {
@@ -208,7 +219,7 @@ export const getJSLoggedin = () => {
   return jsLoggedin;
 };
 
-export const firstLoad = async (refreshApp_cb) => {
+export const loadProfile = async (refreshApp_cb) => {
   var ret = await readProfileData();
   appRefresh();
   return ret;

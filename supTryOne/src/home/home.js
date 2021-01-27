@@ -1,48 +1,44 @@
-import React, {useState} from 'react';
-import {performLogout, performRefresh} from '../javascript/browser';
-import {getAutoDials} from '../javascript/profile';
-import Colors from '../javascript/colors';
-import Enums from '../javascript/enums';
+import React, {useEffect, useState} from 'react';
 import Modal from 'react-native-modal';
 
-import styles from '../style/style';
-import {
-  StatusBar,
-  StyleSheet,
-  Keyboard,
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
 import {Button, Divider} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
+import {StatusBar, Keyboard, View, Text} from 'react-native';
+
+
 import AutoDialEntry from './autodial-card';
 import AutoDialEdit from './autodial-edit';
 
+import Colors from '../javascript/colors';
+import styles from '../style/style';
+import {performLogout, performRefresh, performInternet} from '../javascript/browser';
+import {getAutoDials} from '../javascript/profile';
+
+
 export default function HomeScreen() {
+  console.log('sup: showing home screen');
+
+  useEffect(() => {
+    this.refreshon = setInterval(performRefresh, 600000); // 10 minutes
+    return () => {
+      clearInterval(this.refreshon);
+    };
+  }, []);
+
   const [editIndex, setEditIndex] = useState(0);
-  const [editVisible, setEditVisible] = useState(true);
+  const [editVisible, setEditVisible] = useState(false);
 
   // sup: Edit Modal
   const editDismiss = () => {
     setEditVisible(false);
   };
   const editShow = (idx) => {
-    console.log('sup: show edit modal for ' + idx);
     setEditIndex(idx);
     setEditVisible(true);
   };
-  const editOnSave = (item_new) => {
-    console.log('sup: new:1 ' + item_new.dnis);
-    console.log('sup: new:2 ' + item_new.description);
-    console.log('sup: new:3 ' + item_new.destination);
+  const editOnSave = (item_new, item_idx) => {
     editDismiss();
-  }
-  
-
-
-
+  };
 
   const onLogoutPress = () => {
     console.log('sup: logging out');
@@ -54,6 +50,11 @@ export default function HomeScreen() {
     performRefresh();
   };
 
+  const onInternetPress = () => {
+    console.log('sup: test internet');
+    performInternet();
+  };
+  
   return (
     <>
       <StatusBar
@@ -73,6 +74,7 @@ export default function HomeScreen() {
           onSave={editOnSave}
           onCancel={editDismiss}
           ad_item={getAutoDials()[editIndex]}
+          ad_indx={editIndex}
         />
       </Modal>
 
@@ -83,17 +85,22 @@ export default function HomeScreen() {
         <View style={styles.bodyView}>
           <ScrollView keyboardDismissMode="on-drag">
             <View
-              style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+              style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+
               <Button
                 buttonStyle={styles.loginButton}
                 onPress={onLogoutPress}
                 title="Logout"
               />
-
               <Button
                 buttonStyle={styles.loginButton}
                 onPress={onRefreshPress}
                 title="Refresh"
+              />
+              <Button
+                buttonStyle={styles.loginButton}
+                onPress={onInternetPress}
+                title="Internet"
               />
             </View>
 

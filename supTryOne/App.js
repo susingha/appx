@@ -15,52 +15,47 @@ import SplashScreen from './src/splash/splash';
 
 import {initAppRefresh} from './src/javascript/refresh';
 import {initAppStateChange} from './src/javascript/state';
-import {firstLoad, getJSLoggedin} from './src/javascript/profile';
+import {loadProfile, getJSLoggedin} from './src/javascript/profile';
 
 var jsloaded = false;
 
+console.log('sup: App.js');
+
+
 export default function App() {
-  var ret; 
+  var ret;
+
+  console.log('sup: ============= App.js ===========');
 
   const [redraw, setRedraw] = useState(0);
   const refreshApp = () => {
     console.log('sup: Refresh App');
     setRedraw(1 - redraw);
   };
-  
+
+  const firstLoad = () => {
+    console.log('sup: first Load');
+    loadProfile();
+  };
+
   initAppRefresh(refreshApp);
   initAppStateChange();
 
   if (jsloaded == false) {
-    console.log('sup:1 read profile async');
     firstLoad(); // async
-    console.log('sup: First Load Splash');
+    console.log('sup: Show Splash Screen');
     ret = <SplashScreen />;
   } else {
-
-    console.log('sup:2 Refresh Load');
+    console.log('sup: Refresh Load');
     if (getJSLoggedin()) {
-      console.log('sup:3 Show Home Screen');
-      ret = (
-          <HomeScreen />
-      );
+      console.log('sup: Show Home Screen');
+      ret = <HomeScreen />;
     } else {
-      console.log('sup:4 Show Login Screen');
-      ret = (
-          <LoginScreen />
-      );
+      console.log('sup: Show Login Screen');
+      ret = <LoginScreen />;
     }
   }
 
   jsloaded = true;
-  return ret
+  return ret;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

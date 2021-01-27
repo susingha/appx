@@ -1,17 +1,23 @@
+import { LogBox } from 'react-native';
+import Toast from 'react-native-simple-toast';
+
 var xhr = null;
 
 export const xhrSend = (url, addHeaderRef, responseRef, fdata, ctx) => {
   var request;
-  console.log('sup: sending xhr: ' + url);
+  // console.log('sup: sending xhr: ' + url);
 
   xhr = null; // Toggle xhr object reuse to create new
 
   if (xhr == null) {
     xhr = new XMLHttpRequest();
-    // console.log('sup:a got a new xhr');
+    xhr.timeout = 3000;
+    xhr.ontimeout = null;
   }
   request = xhr;
-  request.onreadystatechange = e => {
+  request.onreadystatechange = (e) => {
+    LogBox.ignoreLogs(['Warning: ...']);
+    // console.log('sup: ACK readyState: ' + request.readyState);
     if (request.readyState !== 4) {
       return;
     }
@@ -22,8 +28,11 @@ export const xhrSend = (url, addHeaderRef, responseRef, fdata, ctx) => {
     } else if (request.status === 302) {
       // console.log('sup:302 printing response headers:');
       // console.log(request.getAllResponseHeaders());
+    } else if (request.status === 0) {
+      console.log('App: Error: HTTP ' + request.status + ' Check Internet');
+      Toast.showWithGravity('Check your internet connection', Toast.LONG, Toast.TOP);
     } else {
-      console.warn('Error: HTTP ' + request.status);
+      console.warn('App: Unexpected: HTTP ' + request.status);
       console.log(request.responseText);
     }
   };
