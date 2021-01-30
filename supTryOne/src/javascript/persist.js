@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 export const writeKeyVal = async (key, val) => {
-  console.log('sup: attempting write');
 
   try {
     await AsyncStorage.setItem(key, val);
@@ -14,7 +13,6 @@ export const writeKeyVal = async (key, val) => {
 };
 
 export const readKeyVal = async (key) => {
-  console.log('sup: attempting read');
 
   try {
     const value = await AsyncStorage.getItem(key);

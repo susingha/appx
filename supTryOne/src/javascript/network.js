@@ -5,7 +5,7 @@ var xhr = null;
 
 export const xhrSend = (url, addHeaderRef, responseRef, fdata, ctx) => {
   var request;
-  // console.log('sup: sending xhr: ' + url);
+  console.log('App: INFO: ' + url);
 
   xhr = null; // Toggle xhr object reuse to create new
 
@@ -16,7 +16,7 @@ export const xhrSend = (url, addHeaderRef, responseRef, fdata, ctx) => {
   }
   request = xhr;
   request.onreadystatechange = (e) => {
-    LogBox.ignoreLogs(['Warning: ...']);
+    LogBox.ignoreAllLogs();
     // console.log('sup: ACK readyState: ' + request.readyState);
     if (request.readyState !== 4) {
       return;

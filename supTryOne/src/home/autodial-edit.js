@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button} from 'react-native-elements';
+import {Button, Divider} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import parsePhoneNumber from 'libphonenumber-js';
 

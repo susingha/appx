@@ -21,7 +21,6 @@ var jsloaded = false;
 
 console.log('sup: App.js');
 
-
 export default function App() {
   var ret;
 
@@ -29,12 +28,12 @@ export default function App() {
 
   const [redraw, setRedraw] = useState(0);
   const refreshApp = () => {
-    console.log('sup: Refresh App');
+    console.log('sup: Redraw App');
     setRedraw(1 - redraw);
   };
 
   const firstLoad = () => {
-    console.log('sup: first Load');
+    console.log('sup: First Load');
     loadProfile();
   };
 
@@ -43,15 +42,12 @@ export default function App() {
 
   if (jsloaded == false) {
     firstLoad(); // async
-    console.log('sup: Show Splash Screen');
     ret = <SplashScreen />;
   } else {
     console.log('sup: Refresh Load');
     if (getJSLoggedin()) {
-      console.log('sup: Show Home Screen');
       ret = <HomeScreen />;
     } else {
-      console.log('sup: Show Login Screen');
       ret = <LoginScreen />;
     }
   }

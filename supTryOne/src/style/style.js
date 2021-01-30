@@ -1,17 +1,20 @@
-import {color} from 'react-native-reanimated';
-import Colors from '../javascript/colors';
-const React = require('react-native');
+const colors = {
+  logoBackground: 'red',
+};
 
-const {StyleSheet} = React;
+/*
+backgroundColor: 'cyan'
+borderColor: 'green',
+borderWidth: 1,
+*/
 
 export default {
   topLevelView: {
     flex: 1,
-    margin: 1,
-    backgroundColor: '#FFFFFA',
+    // margin: 1,
   },
   titleBarView: {
-    backgroundColor: Colors.logoBackground,
+    backgroundColor: 'red',
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
   },
@@ -22,11 +25,12 @@ export default {
   },
   headerView: {},
   footerView: {
-    backgroundColor: '#50B9AA',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'dodgerblue', // royalblue, dodgerblue, lightskyblue, deepskyblue, cornflowerblue
   },
-  toastView: {
-    backgroundColor: 'darkred',
-  },
+  iconTitleStyle: {},
+  iconTitleStyle: {},
 
   // sup: card
   cardViewTop: {
@@ -37,12 +41,11 @@ export default {
     marginTop: 8,
     marginBottom: 8,
 
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: '#f0f0f5',
 
     padding: 7,
     paddingLeft: 10,
     paddingRight: 10,
-
 
     /*
     // sup: replace with Card from react-native-paper
@@ -70,8 +73,6 @@ export default {
   cardBodyText: {},
   cardFooterText: {},
 
-
-
   phoneNumberText: {
     fontSize: 15,
     letterSpacing: 1,
@@ -93,19 +94,23 @@ export default {
   // sup: edit modal
   editModalFull: {
     margin: 0,
+    borderColor: 'green',
+    borderWidth: 1,
   },
   editModalList: {
+    
     backgroundColor: '#e6e6e6',
     padding: 10,
     margin: 10,
     borderRadius: 10,
+
+    borderColor: 'red',
+    borderWidth: 1,
   },
 
   logoTextSmall: {
+    margin: 5,
     fontSize: 30,
-    fontWeight: '800',
-    marginTop: 2,
-    marginBottom: 5,
     textAlign: 'center',
   },
   logoText: {
