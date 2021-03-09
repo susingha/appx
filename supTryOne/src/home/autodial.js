@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, Platform} from 'react-native';
 
-import {ScrollView} from 'react-native-gesture-handler';
+//port {ScrollView, RefreshControl} from 'react-native-gesture-handler';
+import {ScrollView, RefreshControl} from 'react-native';
 import Modal from 'react-native-modal';
 
 import AutoDialEntry from './autodial-card';
@@ -9,14 +10,18 @@ import AutoDialEdit from './autodial-edit';
 
 import styles from '../style/style';
 import {getAutoDials} from '../javascript/profile';
+import {performRefresh} from '../javascript/browser';
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function AutoDial() {
   console.log('sup: showing auto dial screen');
 
   const [editIndex, setEditIndex] = useState(0);
-  const [editVisible, setEditVisible] = useState(true);
+  const [editVisible, setEditVisible] = useState(false);
 
-  // sup: Edit Modal
   const editDismiss = () => {
     setEditVisible(false);
   };
@@ -28,6 +33,13 @@ export default function AutoDial() {
     editDismiss();
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    performRefresh();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <>
       <Modal
@@ -35,31 +47,33 @@ export default function AutoDial() {
         {...(Platform.OS === 'ios'
           ? {
               presentationStyle: 'pageSheet',
+              transparent: false,
             }
           : {})}
         {...(Platform.OS === 'android'
           ? {
               statusBarTranslucent: false,
+              transparent: true,
             }
           : {})}
-        animationType="slide" // sup: fade or slide
+        animationType="slide"
         onBackdropPress={editDismiss}
         onBackButtonPress={editDismiss}
-        transparent={false}
-
-        style={styles.editModalFull}>
-          <Text>Ok Google</Text>
-          {/* 
+        style={styles.editModalContainer}>
         <AutoDialEdit
           onSave={editOnSave}
           onCancel={editDismiss}
           ad_item={getAutoDials()[editIndex]}
           ad_indx={editIndex}
         />
-        */}
       </Modal>
 
-      <ScrollView keyboardDismissMode="on-drag">
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}>
         {getAutoDials().map((item, index) => (
           <AutoDialEntry
             key={item.dnis}

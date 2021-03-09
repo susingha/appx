@@ -53,14 +53,14 @@ export default function LoginScreen(props) {
         <TextInput
           placeholder="Username"
           placeholderColor="#c4c3cb"
-          style={styles.loginFormTextInput}
+          style={styles.formTextInput}
           onChangeText={handleUsername}
         />
 
         <TextInput
           placeholder="Password"
           placeholderColor="#c4c3cb"
-          style={styles.loginFormTextInput}
+          style={styles.formTextInput}
           onChangeText={handlePassword}
           secureTextEntry={true}
         />

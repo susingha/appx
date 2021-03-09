@@ -81,7 +81,7 @@ export default {
   phoneNumberView: {
     backgroundColor: '#E65C00',
     padding: 10,
-    borderRadius: 10,
+    
     marginBottom: 5,
   },
   phoneButton: {
@@ -92,20 +92,32 @@ export default {
   },
 
   // sup: edit modal
-  editModalFull: {
+  editModalContainer: {
     margin: 0,
-    borderColor: 'green',
-    borderWidth: 1,
-  },
-  editModalList: {
+    justifyContent: 'flex-start',
     
-    backgroundColor: '#e6e6e6',
+    // borderColor: 'green',
+    // borderWidth: 1,
+  },
+  editModalContent: {
+    flex: 1,
+    backgroundColor: 'whitesmoke',
     padding: 10,
-    margin: 10,
-    borderRadius: 10,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
 
-    borderColor: 'red',
-    borderWidth: 1,
+    // borderColor: 'red',
+    // borderWidth: 1,
+  },
+  editModalHeaderText: {
+    fontSize: 17,
+    letterSpacing: 1,
+  },
+  editModalLabelText: {
+    margin: 5,
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 1,
   },
 
   logoTextSmall: {
@@ -121,49 +133,41 @@ export default {
     textAlign: 'center',
   },
 
-  loginFormTextInput: {
-    height: 50,
+  formTextInput: {
+    height: 40,    
     fontSize: 20,
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#eaeaea',
+    borderColor: 'gainsboro',
     backgroundColor: '#fafafa',
+    padding: 0,
     paddingLeft: 10,
     marginTop: 5,
     marginBottom: 5,
-  },
-
-  textInputPhone: {
-    height: 50,
-    fontSize: 20,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#eaeaea',
-    backgroundColor: '#fafafa',
-    paddingLeft: 10,
-    marginTop: 5,
-    marginBottom: 5,
+    color: 'black',
   },
   pickerCountryCode: {
     inputIOS: {
-      height: 50,
+      height: 40,    
       fontSize: 20,
-      borderRadius: 10,
+      borderRadius: 5,
       borderWidth: 1,
-      borderColor: '#eaeaea',
+      borderColor: 'gainsboro',
       backgroundColor: '#fafafa',
+      padding: 0,
       paddingLeft: 10,
       marginTop: 5,
       marginBottom: 5,
       color: 'black',
     },
     inputAndroid: {
-      height: 50,
+      height: 40,    
       fontSize: 20,
-      borderRadius: 10,
+      borderRadius: 5,
       borderWidth: 1,
-      borderColor: '#eaeaea',
+      borderColor: 'gainsboro',
       backgroundColor: '#fafafa',
+      padding: 0,
       paddingLeft: 10,
       marginTop: 5,
       marginBottom: 5,
@@ -178,15 +182,17 @@ export default {
     marginTop: 5,
     marginBottom: 5,
   },
-  cencelButton: {
+
+
+  cancelText: {
     backgroundColor: 'grey',
     borderRadius: 10,
     height: 45,
     marginTop: 5,
     marginBottom: 5,
   },
-  saveButton: {
-    backgroundColor: '#3897f1',
+  saveText: {
+    backgroundColor: 'dodgerblue',
     borderRadius: 10,
     height: 45,
     marginTop: 5,

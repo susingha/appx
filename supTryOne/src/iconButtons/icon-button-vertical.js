@@ -12,6 +12,7 @@ export default function IconButtonVertical(props) {
       title={props.title}
       titleStyle={{color: 'white', fontSize: 10}}
       icon={<Icon name={props.icon} type="material" size={20} color="white" />}
+      onPress={props.onTap}
     />
   );
 }

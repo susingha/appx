@@ -43,7 +43,7 @@ const addStatusSaveAutoDialHeaders = (xhr, ctx) => {
   xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 };
 const requestStatusSaveAutoDial = (ctx, json_head) => {
-  var fdata = 'fersure=1&mode=fields&fields=' + JSON.stringify(json_head);
+  var fdata = 'fersure=1&mode=fields&fields=' + JSON.stringify(json_head).replace(/ /gi,"%20");
   xhrSend(
     Urls.statusPage,
     addStatusSaveAutoDialHeaders,

@@ -16,7 +16,7 @@ git/appx/supTryOne/App.js
 git/appx/supTryOne/src/
 
 npm install
-pod install
+cd ios; pod install
 
 
 install react-native-vector-icons. It does not work directly
@@ -33,6 +33,33 @@ install react-native-vector-icons. It does not work directly
     apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 
+install react-native-permissions.
+    Add permissions
+
+    Ios:
+    ===:
+    Edit ios/Podfile
+    + permissions_path = '../node_modules/react-native-permissions/ios'
+    + pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts"
+
+    Edit ios/supTryOne/Info.plist
+    + <key>NSContactsUsageDescription</key>
+    + <string/>
+
+    cd ios; pod install
+
+    Android:
+    =======
+    Edit android/app/src/main/AndroidManifest.xml
+    + <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+install react-native-contacts
+    Ios:
+    ====
+    Edit ios/Podfile
+    + pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+
+    cd ios; pod install
 
 change RCT_METRO_PORT in node_modules/react-native/React/Base/RCTDefines.h
 run on android and ios
