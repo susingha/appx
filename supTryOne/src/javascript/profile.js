@@ -10,6 +10,7 @@ var jsonTree2 = null;
 var jsLoggedin = false;
 var jsUser = null;
 var jsPass = null;
+var jsPage = 'main';
 
 export const processJSONValid = (json) => {
   json = json.trim();
@@ -45,14 +46,42 @@ export const processJSONValidExt = (json) => {
 
   if (jsonTree2 == null) {
     return false;
+  
   }
-
   /*
   var jsonPretty = JSON.stringify(jsonTree2, null, 2);
   console.log(jsonPretty);
   */
 
   return true;
+};
+
+export const getAccountId = () => {
+  console.error('sup: account id not available');
+  return null;
+};
+
+export const getPinlessDials = () => {};
+export const setPinlessDials = () => {};
+
+export const getSpeedDials = () => {
+  if (jsonTree2 == null) {
+    console.error('getSpeedDials returning null');
+    return null;
+  }
+  return jsonTree2.customer_record_ext[1];
+};
+
+export const setSpeedDials = (item, idx) => {
+  if (jsonTree2 == null) {
+    console.error('getSpeedDials jsonTree2 is null');
+    return null;
+  }
+  jsonTree2.customer_record_ext[1][idx] = JSON.parse(JSON.stringify(item));
+
+  if (validateProfileData(jsUser, jsPass) == false) return null;
+
+  return jsonTree2.customer_record_ext[1];
 };
 
 export const getAutoDials = () => {
@@ -70,8 +99,15 @@ export const setAutoDials = (item, idx) => {
   jsonTree2.customer_record_ext[2][idx] = JSON.parse(JSON.stringify(item));
 
   if (validateProfileData(jsUser, jsPass) == false) return null;
-  
-  return jsonTree2.customer_record_ext[2];;
+
+  return jsonTree2.customer_record_ext[2];
+};
+
+export const getJSON1 = () => {
+  return jsonTree1;
+};
+export const getJSON2 = () => {
+  return jsonTree2;
 };
 
 export const validateProfileData = (username, password) => {
@@ -131,34 +167,39 @@ const writeProfileData = async (username, password, loginvar) => {
 
   ret = await writeKeyVal('json1', JSON.stringify(jsonTree1, null, 2));
   if (!ret) {
-    console.log('writeProfileData: Failed json1');
+    console.log('App: writeProfileData: Failed json1');
     return false;
   }
   ret = await writeKeyVal('json2', JSON.stringify(jsonTree2, null, 2));
   if (!ret) {
-    console.log('writeProfileData: Failed json2');
+    console.log('App: writeProfileData: Failed json2');
     return false;
   }
   ret = await writeKeyVal('user', username);
   if (!ret) {
-    console.log('writeProfileData: Failed user');
+    console.log('App: writeProfileData: Failed user');
     return false;
   }
   ret = await writeKeyVal('pass', password);
   if (!ret) {
-    console.log('writeProfileData: Failed pass');
+    console.log('App: writeProfileData: Failed pass');
     return false;
   }
   ret = await writeKeyVal('sign', loginvar.toString());
   if (!ret) {
-    console.log('writeProfileData: Failed sign');
+    console.log('App: writeProfileData: Failed sign');
+    return false;
+  }
+  ret = await writeKeyVal('page', jsPage);
+  if (!ret) {
+    console.log('App: writeProfileData: Failed page');
     return false;
   }
 
   jsLoggedin = loginvar;
   jsUser = username;
   jsPass = password;
-  console.log('writeProfileData: creds saved');
+  console.log('App: writeProfileData: creds saved');
   return true;
 };
 
@@ -170,42 +211,50 @@ const readProfileData = async () => {
   if (ret.succ == true) {
     jsonTree1 = JSON.parse(ret.val);
   } else {
-    console.log('readProfileData: Failed json1');
+    console.log('App: readProfileData: Failed json1');
     return false;
   }
   ret = await readKeyVal('json2');
   if (ret.succ == true) {
     jsonTree2 = JSON.parse(ret.val);
   } else {
-    console.log('readProfileData: Failed json2');
+    console.log('App: readProfileData: Failed json2');
     return false;
   }
   ret = await readKeyVal('user');
   if (ret.succ == true) {
     jsUser = ret.val;
   } else {
-    console.log('readProfileData: Failed user');
+    console.log('App: readProfileData: Failed user');
     return false;
   }
   ret = await readKeyVal('pass');
   if (ret.succ == true) {
     jsPass = ret.val;
   } else {
-    console.log('readProfileData: Failed pass');
+    console.log('App: readProfileData: Failed pass');
     return false;
   }
   ret = await readKeyVal('sign');
   if (ret.succ == true) {
     sign = ret.val;
   } else {
-    console.log('readProfileData: Failed sign');
+    console.log('App: readProfileData: Failed sign');
     return false;
   }
 
   if (sign == true.toString()) jsLoggedin = true;
   else jsLoggedin = false;
 
-  console.log('readProfileData: creds loaded');
+  ret = await readKeyVal('page');
+  if (ret.succ == true) {
+    jsPage = ret.val;
+  } else {
+    console.log('App: readProfileData: Failed page');
+    jsPage = 'main';
+  }
+
+  console.log('App: readProfileData: creds loaded');
   return true;
 };
 
@@ -217,6 +266,17 @@ export const getJSPass = () => {
 };
 export const getJSLoggedin = () => {
   return jsLoggedin;
+};
+export const getJSPage = () => {
+  return jsPage;
+};
+export const setJSPage = async (pagename) => {
+  jsPage = pagename;
+  var ret = await writeKeyVal('page', jsPage);
+  if (!ret) {
+    console.log('App: writeProfileData: Failed page');
+    return false;
+  }
 };
 
 export const loadProfile = async (refreshApp_cb) => {
@@ -237,6 +297,7 @@ export const setLoggedOut = async () => {
   jsLoggedin = false;
   jsUser = null;
   jsPass = null;
+  jsPage = 'main';
   var ret = await writeProfileData('', '', false);
   appRefresh();
   return ret;

@@ -1,7 +1,3 @@
-const colors = {
-  logoBackground: 'red',
-};
-
 /*
 backgroundColor: 'cyan'
 borderColor: 'green',
@@ -11,12 +7,17 @@ borderWidth: 1,
 export default {
   topLevelView: {
     flex: 1,
-    // margin: 1,
+    backgroundColor: 'white'
   },
   titleBarView: {
-    backgroundColor: 'red',
-    borderBottomRightRadius: 15,
-    borderBottomLeftRadius: 15,
+    marginLeft: -20,
+    marginRight: -20,
+    marginBottom: 0,
+  },
+  titleBarText: {
+    marginBottom: 10,
+    fontSize: 25,
+    textAlign: 'center',
   },
   bodyView: {
     flex: 1,
@@ -84,11 +85,21 @@ export default {
     
     marginBottom: 5,
   },
+
+  // backgroundColor: '#E65C00',
+  // borderColor: '#F07403',
   phoneButton: {
-    backgroundColor: '#E65C00',
-    borderColor: '#F07403',
+    backgroundColor: 'orangered',
+    borderColor: 'darkorange',
     borderWidth: 1,
     borderRadius: 15,
+  },
+  speedButton: {
+    backgroundColor: 'orangered',
+    borderColor: 'darkorange',
+    borderWidth: 1,
+    borderRadius: 15,
+    marginLeft: 50,
   },
 
   // sup: edit modal

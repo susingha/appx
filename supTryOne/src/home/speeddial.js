@@ -1,23 +1,23 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, Platform} from 'react-native';
 
-import {FlatList, RefreshControl} from 'react-native';
+import {ScrollView, RefreshControl} from 'react-native';
 import Modal from 'react-native-modal';
 
 import TitleBar from './titlebar';
-import AutoDialEntry from './autodial-card';
-import AutoDialEdit from './autodial-edit';
+import SpeedDialEntry from './speeddial-card';
+import SpeedDialEdit from './speeddial-edit';
 
 import styles from '../style/style';
-import {getAutoDials} from '../javascript/profile';
+import {getSpeedDials} from '../javascript/profile';
 import {performRefresh} from '../javascript/browser';
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function AutoDial() {
-  console.log('sup: showing auto dial screen');
+export default function SpeedDial() {
+  console.log('sup: showing speed dial screen');
 
   const [editIndex, setEditIndex] = useState(0);
   const [editVisible, setEditVisible] = useState(false);
@@ -40,19 +40,10 @@ export default function AutoDial() {
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  const DATA = getAutoDials();
-  const renderItem = ({item, index}) => (
-    <AutoDialEntry
-      key={item.dnis}
-      ad_indx={index}
-      ad_item={item}
-      onPress={editShow}
-    />
-  );
-
   return (
     <>
-      <TitleBar text="Auto Dial" color="darkblue" barstyle="light-content" />
+      <TitleBar text="Speed Dial" color="darkblue" barstyle="light-content" />
+
       <Modal
         isVisible={editVisible}
         {...(Platform.OS === 'ios'
@@ -71,24 +62,29 @@ export default function AutoDial() {
         onBackdropPress={editDismiss}
         onBackButtonPress={editDismiss}
         style={styles.editModalContainer}>
-        <AutoDialEdit
+        <SpeedDialEdit
           onSave={editOnSave}
           onCancel={editDismiss}
-          ad_item={getAutoDials()[editIndex]}
-          ad_indx={editIndex}
+          sd_item={getSpeedDials()[editIndex]}
+          sd_indx={editIndex}
         />
       </Modal>
 
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.dnis}
+      <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         keyboardDismissMode="on-drag"
-        showsVerticalScrollIndicator={false}
-      />
+        showsVerticalScrollIndicator={false}>
+        {getSpeedDials().map((item, index) => (
+          <SpeedDialEntry
+            key={item.entry}
+            sd_indx={index}
+            sd_item={item}
+            onPress={editShow}
+          />
+        ))}
+      </ScrollView>
     </>
   );
 }

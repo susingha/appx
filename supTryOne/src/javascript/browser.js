@@ -43,11 +43,34 @@ const addStatusSaveAutoDialHeaders = (xhr, ctx) => {
   xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 };
 const requestStatusSaveAutoDial = (ctx, json_head) => {
-  var fdata = 'fersure=1&mode=fields&fields=' + JSON.stringify(json_head).replace(/ /gi,"%20");
+  var fdata =
+    'fersure=1&mode=fields&fields=' +
+    JSON.stringify(json_head).replace(/ /gi, '%20');
   xhrSend(
     Urls.statusPage,
     addStatusSaveAutoDialHeaders,
     handleStatusSaveAutoDialResponse,
+    fdata,
+    ctx,
+  );
+};
+
+//////////////////////////////////////////////////////////////////////////////////// Status Page Save SpeedDial
+const handleStatusSaveSpeedDialResponse = (res, ctx) => {
+  // console.log('sup: response' + res);
+  ctx.succ_cb(res);
+};
+const addStatusSaveSpeedDialHeaders = (xhr, ctx) => {
+  xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+};
+const requestStatusSaveSpeedDial = (ctx, json_head) => {
+  var fdata =
+    'fersure=1&mode=fields&fields=' +
+    JSON.stringify(json_head).replace(/ /gi, '%20');
+  xhrSend(
+    Urls.statusPage,
+    addStatusSaveSpeedDialHeaders,
+    handleStatusSaveSpeedDialResponse,
     fdata,
     ctx,
   );
@@ -204,7 +227,25 @@ export const performLogout = () => {
 export const performSaveAutoDial = (json_head, handleResponse) => {
   console.log('sup: performSaveAutoDial');
   requestStatusSaveAutoDial(
-    {user: getJSUser(), pass: getJSPass(), succ_cb: handleResponse, fail_cb: null},
+    {
+      user: getJSUser(),
+      pass: getJSPass(),
+      succ_cb: handleResponse,
+      fail_cb: null,
+    },
+    json_head,
+  );
+};
+
+export const performSaveSpeedDial = (json_head, handleResponse) => {
+  console.log('sup: performSaveSpeedDial');
+  requestStatusSaveSpeedDial(
+    {
+      user: getJSUser(),
+      pass: getJSPass(),
+      succ_cb: handleResponse,
+      fail_cb: null,
+    },
     json_head,
   );
 };

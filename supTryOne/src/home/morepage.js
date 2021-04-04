@@ -9,6 +9,7 @@ import {selectContactPhone} from 'react-native-select-contact';
 import Contacts from 'react-native-contacts';
 import parsePhoneNumber from 'libphonenumber-js';
 
+import TitleBar from './titlebar';
 import styles from '../style/style';
 import {
   performLogout,
@@ -124,6 +125,7 @@ export default function MorePage() {
 
   return (
     <View>
+      <TitleBar text='More' color='white' barstyle='dark-content'/>
       <Button
         buttonStyle={styles.loginButton}
         onPress={onLogoutPress}

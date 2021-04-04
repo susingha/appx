@@ -3,6 +3,7 @@ import React from 'react';
 
 import MainPage from './mainpage';
 import AutoDial from './autodial';
+import SpeedDial from './speeddial';
 import MorePage from './morepage';
 
 export default function Pager(props) {
@@ -15,7 +16,7 @@ export default function Pager(props) {
     ret = <AutoDial />;
   }
   if (props.pageName == 'speed') {
-    ret = <AutoDial />;
+    ret = <SpeedDial />;
   }
   if (props.pageName == 'recents') {
     ret = <AutoDial />;

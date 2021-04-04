@@ -1,5 +1,4 @@
-[Sun Nov 29 2020 02:22:22.630]  LOG      sup: sending xhr: https://services.indiald.com/eu/__z_services.asp?mode=customer_status&customer=3670769222
-[Sun Nov 29 2020 02:22:22.148]  LOG      {
+{
   "request_id": "{676F573B-2DBD-033D-1844-35DAF79BBE8E}",
   "sql_log": [
     "query_time:001 ms: select * from parent_cos",
@@ -260,4 +259,3 @@
     }
   }
 }
-[Sun Nov 29 2020 02:22:22.160]  LOG      sup: sending xhr: https://services.indiald.com/eu/__z_services.asp?mode=customer_status_ext&customer=3670769222

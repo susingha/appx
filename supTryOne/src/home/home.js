@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {StatusBar, View, Text} from 'react-native';
 
-import Pager from './pager.js';
+import TitleBar from './titlebar';
+import Pager from './pager';
 import styles from '../style/style';
 import IconButtonVertical from '../iconButtons/icon-button-vertical';
 
 import {performRefresh} from '../javascript/browser';
+import {getJSPage, setJSPage} from '../javascript/profile';
 
 var waitToRefresh = 5;
 const fiveMinuteRefresh = () => {
@@ -27,24 +29,16 @@ export default function HomeScreen() {
     };
   }, []);
 
-  const [currentPage, setCurrentPage] = useState('main');
+  const [currentPage, setCurrentPage] = useState(getJSPage());
   const showPage = (pagename) => {
     console.log('sup: page ' + pagename);
+    setJSPage(pagename);
     setCurrentPage(pagename);
   };
 
   return (
     <>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="darkred"
-        translucent={false}
-      />
-
       <View style={styles.topLevelView}>
-        <View style={styles.titleBarView}>
-          <Text style={styles.logoTextSmall}>Logo</Text>
-        </View>
         <View style={styles.bodyView}>
           <Pager pageName={currentPage} />
         </View>
