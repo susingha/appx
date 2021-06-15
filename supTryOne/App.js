@@ -16,6 +16,9 @@ import SplashScreen from './src/splash/splash';
 import {initAppRefresh} from './src/javascript/refresh';
 import {initAppStateChange} from './src/javascript/state';
 import {loadProfile, getJSLoggedin} from './src/javascript/profile';
+/*
+import {performLogout} from './src/javascript/browser';
+*/
 
 var jsloaded = false;
 
@@ -23,8 +26,10 @@ console.log('sup: App.js');
 
 export default function App() {
   var ret;
-
   console.log('sup: ============= App.js ===========');
+  /*
+  performLogout();
+  */
 
   const [redraw, setRedraw] = useState(0);
   const refreshApp = () => {

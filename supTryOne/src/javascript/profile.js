@@ -46,7 +46,6 @@ export const processJSONValidExt = (json) => {
 
   if (jsonTree2 == null) {
     return false;
-  
   }
   /*
   var jsonPretty = JSON.stringify(jsonTree2, null, 2);
@@ -57,13 +56,61 @@ export const processJSONValidExt = (json) => {
 };
 
 export const getAccountId = () => {
-  console.error('sup: account id not available');
-  return null;
+  if (jsonTree1 == null) {
+    console.error('getAccountId jsonTree1 is null');
+    return null;
+  }
+  return jsonTree1.customer_record.ACCOUNT_ID.toString();
 };
+///////////////////////////////////////////////////////////////////////////////////////
+export const getPinlessDials = () => {
+  if (jsonTree2 == null) {
+    console.error('getPinlessDials returning null');
+    return null;
+  }
+  return jsonTree2.customer_record_ext[0];
+};
+export const setPinlessDials = (item, idx) => {
+  if (jsonTree2 == null) {
+    console.error('getPinlessDials jsonTree2 is null');
+    return null;
+  }
+  jsonTree2.customer_record_ext[0][idx] = JSON.parse(JSON.stringify(item));
 
-export const getPinlessDials = () => {};
-export const setPinlessDials = () => {};
+  if (validateProfileData(jsUser, jsPass) == false) return null;
 
+  return jsonTree2.customer_record_ext[0];
+};
+export const addPinlessDials = (item) => {
+  if (jsonTree2 == null) {
+    console.error('getPinlessDials jsonTree2 is null');
+    return null;
+  }
+
+  var last_index = jsonTree2.customer_record_ext[0].length - 1;
+  if (jsonTree2.customer_record_ext[0][last_index].account_id == null) {
+    console.log('sup: not appending extra dummy items');
+    return last_index;
+  }
+
+  jsonTree2.customer_record_ext[0].push(JSON.parse(JSON.stringify(item)));
+
+  if (validateProfileData(jsUser, jsPass) == false) return null;
+
+  return jsonTree2.customer_record_ext[0].length - 1;
+};
+export const delPinlessDials = (idx) => {
+  if (jsonTree2 == null) {
+    console.error('getPinlessDials jsonTree2 is null');
+    return null;
+  }
+  jsonTree2.customer_record_ext[0].splice(idx, 1);
+
+  if (validateProfileData(jsUser, jsPass) == false) return null;
+
+  return jsonTree2.customer_record_ext[0];
+};
+///////////////////////////////////////////////////////////////////////////////////////
 export const getSpeedDials = () => {
   if (jsonTree2 == null) {
     console.error('getSpeedDials returning null');
@@ -71,7 +118,6 @@ export const getSpeedDials = () => {
   }
   return jsonTree2.customer_record_ext[1];
 };
-
 export const setSpeedDials = (item, idx) => {
   if (jsonTree2 == null) {
     console.error('getSpeedDials jsonTree2 is null');
@@ -83,7 +129,36 @@ export const setSpeedDials = (item, idx) => {
 
   return jsonTree2.customer_record_ext[1];
 };
+export const addSpeedDials = (item) => {
+  if (jsonTree2 == null) {
+    console.error('getSpeedDials jsonTree2 is null');
+    return null;
+  }
 
+  var last_index = jsonTree2.customer_record_ext[1].length - 1;
+  if (jsonTree2.customer_record_ext[1][last_index].account_id == null) {
+    console.log('sup: not appending extra dummy items');
+    return last_index;
+  }
+
+  jsonTree2.customer_record_ext[1].push(JSON.parse(JSON.stringify(item)));
+
+  if (validateProfileData(jsUser, jsPass) == false) return null;
+
+  return jsonTree2.customer_record_ext[1].length - 1;
+};
+export const delSpeedDials = (idx) => {
+  if (jsonTree2 == null) {
+    console.error('getSpeedDials jsonTree2 is null');
+    return null;
+  }
+  jsonTree2.customer_record_ext[1].splice(idx, 1);
+
+  if (validateProfileData(jsUser, jsPass) == false) return null;
+
+  return jsonTree2.customer_record_ext[1];
+};
+///////////////////////////////////////////////////////////////////////////////////////
 export const getAutoDials = () => {
   if (jsonTree2 == null) {
     console.error('getAutoDials returning null');
@@ -102,6 +177,7 @@ export const setAutoDials = (item, idx) => {
 
   return jsonTree2.customer_record_ext[2];
 };
+///////////////////////////////////////////////////////////////////////////////////////
 
 export const getJSON1 = () => {
   return jsonTree1;

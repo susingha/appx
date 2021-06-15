@@ -1,91 +1,22 @@
 import React, {useState} from 'react';
 import {Button, Divider} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
-import parsePhoneNumber from 'libphonenumber-js';
+import {ScrollView} from 'react-native-gesture-handler';
 
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, Platform} from 'react-native';
 
 import styles from '../style/style';
 import {getAutoDials, setAutoDials} from '../javascript/profile';
+import {performSaveStatusPage} from '../javascript/browser';
 import {listCountryCodes} from '../javascript/codes';
-import {performSaveAutoDial, performRefresh} from '../javascript/browser';
-import {ScrollView} from 'react-native-gesture-handler';
-
 import {checkRequestPermissionContacts} from '../javascript/permission';
-import {Platform} from 'react-native';
-import {selectContactPhone} from 'react-native-select-contact';
-import Contacts from 'react-native-contacts';
+import {
+  decodeDestToCC,
+  decodeDestToNo,
+  onContactsPressIm,
+  onContactsPressEx,
+} from '../javascript/contacts';
 
-//////////////////////////////////////////////////////////////////////////////////// Parsing functions
-const parseValidDest = (dest) => {
-  var no;
-  if (dest[0] === '0' && dest[1] === '1' && dest[2] === '1') {
-    no = '+' + dest.substring(3);
-  } else {
-    no = '+1' + dest;
-  }
-  return parsePhoneNumber(no);
-};
-const decodeDestToCC = (no) => {
-  var valid = parseValidDest(no);
-  if (valid) {
-    return valid.countryCallingCode;
-  }
-  return '0';
-};
-const decodeDestToNo = (no) => {
-  var valid = parseValidDest(no);
-  if (valid) {
-    return valid.nationalNumber;
-  }
-  return '0';
-};
-
-//////////////////////////////////////////////////////////////////////////////////// Contacts functions
-const onContactsPressIm = (selectedcb) => {
-  console.log('sup: Contacts Import');
-  return selectContactPhone().then((selection) => {
-    if (!selection) {
-      return null;
-    }
-
-    let {contact, selectedPhone} = selection;
-    console.log(
-      'App: Contact selected' +
-        selectedPhone.type +
-        ' - ' +
-        selectedPhone.number +
-        ' - ' +
-        contact.name,
-    );
-
-    selectedcb(contact.name, selectedPhone.number);
-    return selectedPhone.number;
-  });
-};
-
-const onContactsPressEx = (phone) => {
-  console.log('sup: Contacts Export');
-  var newPerson = {
-    phoneNumbers: [
-      {
-        number: phone,
-        label: 'IndiaLD',
-      },
-    ],
-    /*
-    displayName: 'Friedrich Nietzsche', // Android
-    familyName: 'Jung', // Ios
-    givenName: 'Carl',
-    middleName: '',
-    */
-  };
-  Contacts.openContactForm(newPerson).then((contact) => {
-    // console.log('App: contact saved');
-  });
-};
-
-//////////////////////////////////////////////////////////////////////////////////// Component starts here
 export default function AutoDialEdit(props) {
   console.log('sup: editing: ' + JSON.stringify(props.ad_item));
 
@@ -233,7 +164,7 @@ export default function AutoDialEdit(props) {
 
     json_auto[item_idx] = item_new;
     console.log('sup: ' + JSON.stringify(json_head));
-    performSaveAutoDial(json_head, handleSaveResponse);
+    performSaveStatusPage(json_head, handleSaveResponse);
   };
 
   const handleSavePress = (desc, code, phone) => {
@@ -259,10 +190,10 @@ export default function AutoDialEdit(props) {
         />
 
         <Button
-          disabled={true}
           type="clear"
           title={phone_text}
-          titleStyle={styles.editModalHeaderText}
+          disabledTitleStyle={styles.editModalHeaderText}
+          disabled
         />
 
         <Button
@@ -319,7 +250,7 @@ export default function AutoDialEdit(props) {
             type="clear"
             title="Contact import"
             titleStyle={styles.editModalHeaderText}
-            onPress={handleContactImport.bind(permission_contacts = false)}
+            onPress={handleContactImport.bind((permission_contacts = false))}
           />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>

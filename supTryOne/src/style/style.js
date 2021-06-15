@@ -7,7 +7,7 @@ borderWidth: 1,
 export default {
   topLevelView: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   titleBarView: {
     marginLeft: -20,
@@ -82,7 +82,6 @@ export default {
   phoneNumberView: {
     backgroundColor: '#E65C00',
     padding: 10,
-    
     marginBottom: 5,
   },
 
@@ -99,14 +98,27 @@ export default {
     borderColor: 'darkorange',
     borderWidth: 1,
     borderRadius: 15,
-    marginLeft: 50,
+  },
+  addButton: {
+    padding: 5,
+    backgroundColor: 'limegreen',
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  floatingButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 100,
+    right: 20,
+    bottom: 25,
   },
 
   // sup: edit modal
   editModalContainer: {
     margin: 0,
     justifyContent: 'flex-start',
-    
+
     // borderColor: 'green',
     // borderWidth: 1,
   },
@@ -121,6 +133,7 @@ export default {
     // borderWidth: 1,
   },
   editModalHeaderText: {
+    color: 'darkblue',
     fontSize: 17,
     letterSpacing: 1,
   },
@@ -145,7 +158,7 @@ export default {
   },
 
   formTextInput: {
-    height: 40,    
+    height: 40,
     fontSize: 20,
     borderRadius: 5,
     borderWidth: 1,
@@ -159,7 +172,7 @@ export default {
   },
   pickerCountryCode: {
     inputIOS: {
-      height: 40,    
+      height: 40,
       fontSize: 20,
       borderRadius: 5,
       borderWidth: 1,
@@ -172,7 +185,7 @@ export default {
       color: 'black',
     },
     inputAndroid: {
-      height: 40,    
+      height: 40,
       fontSize: 20,
       borderRadius: 5,
       borderWidth: 1,
@@ -193,7 +206,6 @@ export default {
     marginTop: 5,
     marginBottom: 5,
   },
-
 
   cancelText: {
     backgroundColor: 'grey',

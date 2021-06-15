@@ -18,7 +18,7 @@ ctx.fail_cb
 */
 
 const processHTTPFailed = (ctx) => {
-  console.log('processHTTPFailed: HTTP Req Failed');
+  console.log('App: processHTTPFailed: HTTP Req Failed');
   if (ctx.fail_cb) ctx.fail_cb();
   else setLoggedOut();
 };
@@ -34,43 +34,22 @@ const processHTTPSuccess = (ctx) => {
   }
 };
 
-//////////////////////////////////////////////////////////////////////////////////// Status Page Save AutoDial
-const handleStatusSaveAutoDialResponse = (res, ctx) => {
+//////////////////////////////////////////////////////////////////////////////////// Status Page Save
+const handleStatusPageSaveResponse = (res, ctx) => {
   // console.log('sup: response' + res);
   ctx.succ_cb(res);
 };
-const addStatusSaveAutoDialHeaders = (xhr, ctx) => {
+const addStatusPageSaveHeaders = (xhr, ctx) => {
   xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 };
-const requestStatusSaveAutoDial = (ctx, json_head) => {
+const requestStatusPageSave = (ctx, json_head) => {
   var fdata =
     'fersure=1&mode=fields&fields=' +
     JSON.stringify(json_head).replace(/ /gi, '%20');
   xhrSend(
     Urls.statusPage,
-    addStatusSaveAutoDialHeaders,
-    handleStatusSaveAutoDialResponse,
-    fdata,
-    ctx,
-  );
-};
-
-//////////////////////////////////////////////////////////////////////////////////// Status Page Save SpeedDial
-const handleStatusSaveSpeedDialResponse = (res, ctx) => {
-  // console.log('sup: response' + res);
-  ctx.succ_cb(res);
-};
-const addStatusSaveSpeedDialHeaders = (xhr, ctx) => {
-  xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
-};
-const requestStatusSaveSpeedDial = (ctx, json_head) => {
-  var fdata =
-    'fersure=1&mode=fields&fields=' +
-    JSON.stringify(json_head).replace(/ /gi, '%20');
-  xhrSend(
-    Urls.statusPage,
-    addStatusSaveSpeedDialHeaders,
-    handleStatusSaveSpeedDialResponse,
+    addStatusPageSaveHeaders,
+    handleStatusPageSaveResponse,
     fdata,
     ctx,
   );
@@ -81,7 +60,7 @@ const handleStatusExtPageResponse = (res, ctx) => {
   if (processJSONValidExt(res)) {
     processHTTPSuccess(ctx);
   } else {
-    console.log('Status JSON invalid Ext');
+    console.log('App: Status JSON invalid Ext');
     processHTTPFailed(ctx);
   }
 };
@@ -100,7 +79,7 @@ const handleStatusPageResponse = (res, ctx) => {
   if (processJSONValid(res)) {
     requestStatusExtPage(ctx);
   } else {
-    console.log('Status JSON invalid');
+    console.log('App: Status JSON invalid');
     processHTTPFailed(ctx);
   }
 };
@@ -208,7 +187,28 @@ export const performLoginAuto = () => {
   });
 };
 
+export const performLogout = () => {
+  console.log('sup: perform logout');
+  setLoggedOut();
+};
+
+export const performSaveStatusPage = (json_head, handleResponse) => {
+  console.log('sup: performSaveStatusPage');
+  requestStatusPageSave(
+    {
+      user: getJSUser(),
+      pass: getJSPass(),
+      succ_cb: handleResponse,
+      fail_cb: null,
+    },
+    json_head,
+  );
+};
+
+var doRefresh = true;
 export const performRefresh = () => {
+  if (doRefresh == false) return;
+
   console.log('sup: performRefresh');
 
   requestStatusPage({
@@ -218,34 +218,9 @@ export const performRefresh = () => {
     fail_cb: performLoginAuto,
   });
 };
-
-export const performLogout = () => {
-  console.log('sup: perform logout');
-  setLoggedOut();
+export const disableRefresh = () => {
+  doRefresh = false;
 };
-
-export const performSaveAutoDial = (json_head, handleResponse) => {
-  console.log('sup: performSaveAutoDial');
-  requestStatusSaveAutoDial(
-    {
-      user: getJSUser(),
-      pass: getJSPass(),
-      succ_cb: handleResponse,
-      fail_cb: null,
-    },
-    json_head,
-  );
-};
-
-export const performSaveSpeedDial = (json_head, handleResponse) => {
-  console.log('sup: performSaveSpeedDial');
-  requestStatusSaveSpeedDial(
-    {
-      user: getJSUser(),
-      pass: getJSPass(),
-      succ_cb: handleResponse,
-      fail_cb: null,
-    },
-    json_head,
-  );
+export const enableRefresh = () => {
+  doRefresh = true;
 };

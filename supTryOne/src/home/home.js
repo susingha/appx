@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {StatusBar, View, Text} from 'react-native';
+import {StatusBar, View, Text, TouchableOpacity, Image} from 'react-native';
+import {Button, Icon} from 'react-native-elements';
 
 import TitleBar from './titlebar';
 import Pager from './pager';
@@ -15,7 +16,7 @@ const fiveMinuteRefresh = () => {
     waitToRefresh -= 1;
   } else {
     waitToRefresh = 5;
-    performRefresh();
+    // performRefresh();
   }
 };
 

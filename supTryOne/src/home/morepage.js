@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import {Button, Icon} from 'react-native-elements';
-import {StatusBar, View, Text} from 'react-native';
+import {StatusBar, View, Text, TouchableOpacity} from 'react-native';
 
 import {Platform} from 'react-native';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
@@ -125,7 +125,8 @@ export default function MorePage() {
 
   return (
     <View>
-      <TitleBar text='More' color='white' barstyle='dark-content'/>
+      <TitleBar text="More" color="white" barstyle="dark-content" />
+      
       <Button
         buttonStyle={styles.loginButton}
         onPress={onLogoutPress}

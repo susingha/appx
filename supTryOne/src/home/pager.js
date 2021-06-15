@@ -4,6 +4,7 @@ import React from 'react';
 import MainPage from './mainpage';
 import AutoDial from './autodial';
 import SpeedDial from './speeddial';
+import PinlessDial from './pinlessdial';
 import MorePage from './morepage';
 
 export default function Pager(props) {
@@ -22,7 +23,7 @@ export default function Pager(props) {
     ret = <AutoDial />;
   }
   if (props.pageName == 'pinless') {
-    ret = <AutoDial />;
+    ret = <PinlessDial />;
   }
   if (props.pageName == 'more') {
     ret = <MorePage />;

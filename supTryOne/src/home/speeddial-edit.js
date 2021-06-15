@@ -1,56 +1,36 @@
 import React, {useState} from 'react';
 import {Button, Divider} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
-import parsePhoneNumber from 'libphonenumber-js';
+import {ScrollView} from 'react-native-gesture-handler';
 
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, Platform, Alert} from 'react-native';
 
 import styles from '../style/style';
 import {
   getSpeedDials,
   setSpeedDials,
+  delSpeedDials,
   getAccountId,
 } from '../javascript/profile';
+import {performSaveStatusPage} from '../javascript/browser';
 import {listCountryCodes} from '../javascript/codes';
-import {performSaveSpeedDial, performRefresh} from '../javascript/browser';
-import {ScrollView} from 'react-native-gesture-handler';
-
 import {checkRequestPermissionContacts} from '../javascript/permission';
-import {Platform} from 'react-native';
-import {selectContactPhone} from 'react-native-select-contact';
-import Contacts from 'react-native-contacts';
-
-//////////////////////////////////////////////////////////////////////////////////// Parsing functions
-const parseValidDest = (dest) => {
-  var no;
-  if (dest[0] === '0' && dest[1] === '1' && dest[2] === '1') {
-    no = '+' + dest.substring(3);
-  } else {
-    no = '+1' + dest;
-  }
-  return parsePhoneNumber(no);
-};
-const decodeDestToCC = (no) => {
-  var valid = parseValidDest(no);
-  if (valid) {
-    return valid.countryCallingCode;
-  }
-  return '0';
-};
-const decodeDestToNo = (no) => {
-  var valid = parseValidDest(no);
-  if (valid) {
-    return valid.nationalNumber;
-  }
-  return '0';
-};
+import {
+  decodeDestToCC,
+  decodeDestToNo,
+  onContactsPressIm,
+} from '../javascript/contacts';
 
 //////////////////////////////////////////////////////////////////////////////////// Component starts here
 export default function SpeedDialEdit(props) {
+  if (typeof props.sd_item === 'undefined') return <View />;
+
   console.log('sup: editing: ' + JSON.stringify(props.sd_item));
 
   const sd_item_idx = props.sd_indx;
   const header_text = 'Speed Dial: ' + props.sd_item.entry;
+  const delete_text =
+    'Delete ' + props.sd_item.description + ' - ' + props.sd_item.entry;
   const account_id = getAccountId();
   var sd_item_new = {
     account_id: account_id,
@@ -81,6 +61,20 @@ export default function SpeedDialEdit(props) {
   };
   const handleEntryText = (textinput) => {
     setEntryText(textinput);
+  };
+  const handleSelectedContact = (name, number) => {
+    number = number.match(/\d/g).join('').substr(-10);
+    setPhoneNumber(number);
+    setDescriptionText(name);
+  };
+  const handleContactImport = (permission_contacts = false) => {
+    if (Platform.OS == 'android' && permission_contacts == false) {
+      console.log('App: Permission Contacts Check');
+      checkRequestPermissionContacts(handleContactImport);
+      return;
+    }
+    console.log('App: Permission Contacts OK');
+    onContactsPressIm(handleSelectedContact); // Android needs permission
   };
 
   //////////////////////////////////////////////////////////////////////////////////// Save functionality begin
@@ -136,7 +130,7 @@ export default function SpeedDialEdit(props) {
     var json_speed = json_head.dialer.speed;
     json_speed[item_idx] = item_new;
     console.log('sup: ' + JSON.stringify(json_head));
-    performSaveSpeedDial(json_head, handleSaveResponse);
+    performSaveStatusPage(json_head, handleSaveResponse);
   };
 
   const handleSavePress = (desc, code, phone, entry) => {
@@ -151,7 +145,98 @@ export default function SpeedDialEdit(props) {
     }
     handleSaveRequest(sd_item_new, sd_item_idx);
   };
-  //////////////////////////////////////////////////////////////////////////////////// Save functionality end
+
+  //////////////////////////////////////////////////////////////////////////////////// Delete functionality begin
+  const handleDeleteResponse = (res) => {
+    var json_res = null;
+    try {
+      json_res = JSON.parse(res.trim().slice(1, -2)).fields[1].validated
+        .field_value.speed;
+    } catch (e) {
+      console.warn('ERROR: bad JSON in response ' + res);
+      return;
+    }
+
+    if (json_res.length == getSpeedDials().length - 1) {
+      if (delSpeedDials(sd_item_idx) == null) return;
+    } else {
+      console.log(
+        'App: item not deleted: ' +
+          props.sd_item.entry +
+          ' - ' +
+          props.sd_item.number +
+          ' - ' +
+          props.sd_item.description,
+      );
+      return;
+    }
+
+    props.onSave(null, sd_item_idx);
+  };
+  const handleDeleteRequest = (item, index) => {
+    var sd_array_local = JSON.parse(JSON.stringify(getSpeedDials()));
+    if (item.entry != sd_array_local[index].entry) {
+      console.log(
+        'App: delete candidate: ' +
+          item.entry +
+          ' not same as entry ' +
+          sd_array_local[index].entry,
+      );
+      return;
+    }
+    if (item.description != sd_array_local[index].description) {
+      console.log(
+        'App: delete candidate: ' +
+          item.description +
+          ' not same as entry ' +
+          sd_array_local[index].description,
+      );
+      return;
+    }
+    if (item.number != sd_array_local[index].number) {
+      console.log(
+        'App: delete candidate: ' +
+          item.number +
+          ' not same as entry ' +
+          sd_array_local[index].number,
+      );
+      return;
+    }
+
+    sd_array_local.splice(index, 1); // deletes the entry at index
+
+    var json_head = {
+      dialer: {
+        speed: JSON.parse(JSON.stringify(sd_array_local)),
+      },
+    };
+
+    console.log('sup: ' + JSON.stringify(json_head));
+    performSaveStatusPage(json_head, handleDeleteResponse);
+  };
+  const handleDeletePress = () => {
+    console.log(
+      'sup: deleting: ' +
+        props.sd_item.description +
+        ' at index: ' +
+        sd_item_idx,
+    );
+    handleDeleteRequest(props.sd_item, sd_item_idx);
+  };
+
+  const confirmDeleteAlert = () =>
+    Alert.alert('Delete Speed Dial', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text:
+          'Remove ' + props.sd_item.description + ' - ' + props.sd_item.entry,
+        onPress: handleDeletePress,
+      },
+    ]);
 
   return (
     <View style={styles.editModalContent}>
@@ -164,17 +249,23 @@ export default function SpeedDialEdit(props) {
         />
 
         <Button
-          disabled={true}
           type="clear"
           title={header_text}
-          titleStyle={styles.editModalHeaderText}
+          disabledTitleStyle={styles.editModalHeaderText}
+          disabled
         />
 
         <Button
           type="clear"
           title="Save"
           titleStyle={styles.editModalHeaderText}
-          onPress={handleSavePress.bind(this, null, null, null, null)}
+          onPress={handleSavePress.bind(
+            this,
+            descriptionText,
+            countryCode,
+            phoneNumber,
+            entryText,
+          )}
         />
       </View>
 
@@ -219,6 +310,30 @@ export default function SpeedDialEdit(props) {
           style={styles.formTextInput}
           onChangeText={handleEntryText}
         />
+
+        <View style={{margin: 5}} />
+
+        <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+          <Button
+            type="clear"
+            title="Contact import"
+            titleStyle={styles.editModalHeaderText}
+            onPress={handleContactImport.bind((permission_contacts = false))}
+          />
+        </View>
+
+        <View style={{margin: 5}} />
+
+        {props.sd_item.account_id != null && (
+          <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+            <Button
+              type="clear"
+              title={delete_text}
+              titleStyle={[styles.editModalHeaderText, {color: 'red'}]}
+              onPress={confirmDeleteAlert}
+            />
+          </View>
+        )}
       </ScrollView>
     </View>
   );
