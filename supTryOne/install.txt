@@ -23,14 +23,38 @@ install react-native-vector-icons. It does not work directly
     react-native link is deprecated. Does not work.
     follow instructions at https://www.npmjs.com/package/react-native-vector-icons
 
-    IOS - Option: With CocoaPods
-    Add the following to your Podfile and run pod update:
-    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-    Edit Info.plist as described above.
+    Ios - Option: With CocoaPods
+    ===
+    Edit ios/Podfile
+    + pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+    Edit Info.plist
+    + <key>UIAppFonts</key>
+    + <array>
+    +   <string>AntDesign.ttf</string>
+    +   <string>Entypo.ttf</string>
+    +   <string>EvilIcons.ttf</string>
+    +   <string>Feather.ttf</string>
+    +   <string>FontAwesome.ttf</string>
+    +   <string>FontAwesome5_Brands.ttf</string>
+    +   <string>FontAwesome5_Regular.ttf</string>
+    +   <string>FontAwesome5_Solid.ttf</string>
+    +   <string>Foundation.ttf</string>
+    +   <string>Ionicons.ttf</string>
+    +   <string>MaterialIcons.ttf</string>
+    +   <string>MaterialCommunityIcons.ttf</string>
+    +   <string>SimpleLineIcons.ttf</string>
+    +   <string>Octicons.ttf</string>
+    +   <string>Zocial.ttf</string>
+    +   <string>Fontisto.ttf</string>
+    + </array>
+    
+    cd ios; pod update
 
     Android - Option: With Gradle (recommended)
+    =======
     Edit android/app/build.gradle 
-    apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+    + apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 
 install react-native-permissions.
